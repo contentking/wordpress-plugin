@@ -11,6 +11,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	* @return Bool
 	*/
 	public function check_token( $token = '' ){
+
 		if( $token === '' ):
 			$token = get_option( 'contentking_client_token' );
 		endif;

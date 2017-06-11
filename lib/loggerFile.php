@@ -23,4 +23,3 @@ class LoggerFile implements LoggerInterface{
 	}
 }
 
-?>

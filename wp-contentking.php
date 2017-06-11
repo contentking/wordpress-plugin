@@ -31,12 +31,11 @@ if( !class_exists( 'WP_Contentking' ) ){
 	class WP_Contentking{
 
 		/**
-    * Construct the plugin object
-    */
-    public function __construct(){
+		* Construct the plugin object
+		*/
+		public function __construct(){
 
 			load_textdomain('contentking-plugin', CKP_ROOT_DIR. '/languages/wp-contentking-' . get_locale() . '.mo');
-
 			// Register hooks that are fired when the plugin is activated and deactivated.
 			register_activation_hook( __FILE__, array( &$this, 'activate' ) );
 			register_deactivation_hook( __FILE__, array( &$this, 'deactivate' ) );
@@ -57,10 +56,10 @@ if( !class_exists( 'WP_Contentking' ) ){
 			//Register for client token updates
 			add_action( 'update_option_contentking_client_token', array( &$this, 'check_new_token' ) );
 
-    } // END public function __construct
+		} // END public function __construct
 
 		public function instantiate_async(){
-				$async = new ContentkingWrapper();
+			$async = new ContentkingWrapper();
 		}
 
 		public function send_to_api( $url = '' ){
@@ -70,54 +69,57 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 			//$logger->log("Post url: " . $url . "\n", true);
 			$api = new ContentkingAPI();
-			$result = $api->check_url( $url ); //testing endpoint
+			$result = $api->check_url( $url ); //ToDo: check $result
 
 		}
 
 		/**
-    * Activate the plugin
-    */
-    public static function activate(){
+		* Activate the plugin
+		*/
+		public static function activate(){
 
-    	$flag = get_option('contentking_status_flag');
+			$flag = get_option('contentking_status_flag');
+
 			//Status flag was not found in DB - initialize it.
-    	if ($flag === false):
-    		update_option('contentking_status_flag', '0');
+			if( $flag === false ):
+				update_option('contentking_status_flag', '0');
+
 			//Status flag is 0 - check token and try to validate it.
-    	elseif ($flag === '0'):
-    		if (get_option('contentking_client_token') !== false):
-						$api = new ContentkingAPI();
-        		if( $api->check_token( ) === true):
-        			update_option('contentking_status_flag', '1');
-        		else:
-							update_option('contentking_status_flag', '0');
-						endif;
+			elseif( $flag === '0' ):
+				if( get_option('contentking_client_token') !== false ):
 
-        endif;
+					$api = new ContentkingAPI();
+					if( $api->check_token( ) === true):
+						update_option('contentking_status_flag', '1');
+					else:
+						update_option('contentking_status_flag', '0');
+					endif;
 
-      endif;
+				endif;
 
-    } // END public static function activate
+			endif;
 
-    /**
-    * Deactivate the plugin
-    */
-    public static function deactivate(){
-				// Dectivation activities
+		} // END public static function activate
+
+		/**
+		* Deactivate the plugin
+		*/
+		public static function deactivate(){
+			// Dectivation activities
 		} // END public static function deactivate()
 
 
-    /**
+		/**
 		* hook into WP's admin_init action hook
 		*/
 		public function admin_init(){
 
 			//Register settings
 			add_settings_section(
-			    'contentking_setting_section',
-			    __( 'Example settings section in contentking', 'contentking-plugin' ),
-			    array( &$this,'contentking_setting_callback_function' ),
-			    'contentking'
+				'contentking_setting_section',
+				__( 'Example settings section in contentking', 'contentking-plugin' ),
+				array( &$this,'contentking_setting_callback_function' ),
+				'contentking'
 			);
 
 			add_settings_field(
@@ -129,20 +131,17 @@ if( !class_exists( 'WP_Contentking' ) ){
 			);
 
 			register_setting( 'contentking_setting_section', 'contentking_client_token' );
-
 		} // END public function admin_init
-
 
 		public function contentking_setting_callback_function() {}
 
 		public function check_new_token($old_value, $value, $option) {
 
 			//sending request to Contentking API
-
 			$api = new ContentkingAPI();
 
 			if( $api->check_token( $value ) === true):
-      	update_option('contentking_status_flag', '1');
+				update_option('contentking_status_flag', '1');
 			else:
 				update_option('contentking_status_flag', '0');
 			endif;
@@ -184,27 +183,27 @@ if( !class_exists( 'WP_Contentking' ) ){
 			if ($result === '1'):
 
 				$args = [
-		    	'id' => 'contentking',
-		      'title' => '<span>'.__( 'Contentking', 'contentking-plugin' ).'</span>',
-		      'href' => get_admin_url() . 'options-general.php?page=contentking',
-		      'meta' => [
-		      	'title' => 'Contentking',
-		      	'class' => 'contentking-green-notification',
+					'id' => 'contentking',
+					'title' => '<span>'.__( 'Contentking', 'contentking-plugin' ).'</span>',
+					'href' => get_admin_url() . 'options-general.php?page=contentking',
+					'meta' => [
+						'title' => 'Contentking',
+						'class' => 'contentking-green-notification',
 					],
-		    ];
+				];
 
 
 			else:
 
 				$args = [
-			  	'id' => 'contentking',
-			  	'title' => '<span> '.__( 'Contentking', 'contentking-plugin' ).'</span>',
-			    'href' => get_admin_url() . 'options-general.php?page=contentking',
-			    'meta' => [
-			    	'title' => 'Contentking',
-			      'class' => 'contentking-red-notification'
+					'id' => 'contentking',
+					'title' => '<span> '.__( 'Contentking', 'contentking-plugin' ).'</span>',
+					'href' => get_admin_url() . 'options-general.php?page=contentking',
+					'meta' => [
+						'title' => 'Contentking',
+						'class' => 'contentking-red-notification'
 					],
-			  ];
+				];
 
 			endif;
 
@@ -221,7 +220,6 @@ if( !class_exists( 'WP_Contentking' ) ){
 		}
 
 	}// END class WP_Contentking{
-
 
 }// END if( !class_exists( 'WP_Contentking' ) ){
 

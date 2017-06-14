@@ -17,10 +17,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 		endif;
 
 		$data = $this->prepare_request_data( ['token' => $token] );
-		$loger = new LoggerFile();
 		$response = wp_remote_post( $this->api_url . 'check_token', $data );
-		$loger->log( print_r($data,true) );
-		$loger->log( print_r($response,true) );
 		if ( is_wp_error( $response ) ):
 			return false;
 

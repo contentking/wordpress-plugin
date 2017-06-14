@@ -18,7 +18,7 @@ endif;
 	<table class = "contentking-setting">
 		<tr>
 			<th scope="row"> <?php _e( 'Token', 'contentking-plugin' );?> </th>
-			<td><input type="text" id="contentking_client_token" name="contentking_client_token" value="<?php echo $contentking_client_token; ?> " />	</td>
+			<td><input type="text" id="contentking_client_token" name="contentking_client_token" value="<?php echo $contentking_client_token; ?>" />	</td>
 		</tr>
 
 	</table>

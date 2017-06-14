@@ -3,7 +3,7 @@
 class ContentkingAPI implements ContentkingAPIInterface {
 
 	protected $api_url = 'https://api.contentkingapp.com/v1/';
-
+	//protected $api_url = 'https://staging-api.contentking.io/v1/';
 	/*
 	* Performs api call to validate token.
 	*
@@ -17,9 +17,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 		endif;
 
 		$data = $this->prepare_request_data( ['token' => $token] );
-
 		$response = wp_remote_post( $this->api_url . 'check_token', $data );
-
 		if ( is_wp_error( $response ) ):
 			return false;
 
@@ -77,11 +75,14 @@ class ContentkingAPI implements ContentkingAPIInterface {
 		endif;
 
 		$prepared_data = [
-			'headers' => [ 'Authorization: token ' . $token ],
+			'headers' => [
+				'Content-Type' => 'application/json',
+				'Authorization' => 'token ' . $token
+			]
 		];
-
+		$prepared_data['body'] = json_encode([]);
 		if( isset( $data['url'] ) ):
-			$prepared_data['body'] = ['url' => $data['url']];
+			$prepared_data['body'] = json_encode(['url' => $data['url']]);
 		endif;
 
 		return $prepared_data;

@@ -21,17 +21,17 @@ endif;
 			<td><input type="text" id="contentking_client_token" name="contentking_client_token" value="<?php echo $contentking_client_token; ?>" />	</td>
 			<td>
 				<?php
+				
 				$flag = get_option('contentking_status_flag');
-				if ($flag === '1'):
-				?>
-					<i class = "icon-ok"> </i>
-				<?php 
-					else: ?>
-					<i class = "icon-cancel"> </i>
-				<?php
-				endif;
+				if ($flag === '1'):	?>
 
-				?>
+					<i class = "icon-ok"> </i>
+
+				<?php else: ?>
+
+					<i class = "icon-cancel"> </i>
+
+				<?php endif; ?>
 			</td>
 		</tr>
 

@@ -219,10 +219,11 @@ if( !class_exists( 'WP_Contentking' ) ){
 			wp_register_style( 'contentking-stylesheet', plugins_url( 'assets/css/admin.css', __FILE__) );
 			wp_enqueue_style( 'contentking-stylesheet' );
 			
-
 		}
 
+		/*Styles for icons at the setting page*/
 		public function register_icon_styles(){
+			
 			wp_register_style( 'fontello-stylesheet', plugins_url( 'assets/fonts/css/fontello.css', __FILE__) );
 			wp_enqueue_style( 'fontello-stylesheet' );
 

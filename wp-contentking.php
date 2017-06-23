@@ -48,6 +48,8 @@ if( !class_exists( 'WP_Contentking' ) ){
 			//Styles and Scripts
 			add_action( 'admin_enqueue_scripts', array( &$this, 'register_contentking_adminbar_styles' ) );
 			add_action( 'wp_enqueue_scripts', array( &$this, 'register_contentking_adminbar_styles' ) );
+			add_action( 'admin_enqueue_scripts', array( &$this, 'register_icon_styles' ) );
+
 
 			//Instantiate async task class
 			add_action('plugins_loaded', array(&$this, 'instantiate_async'));
@@ -216,7 +218,17 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 			wp_register_style( 'contentking-stylesheet', plugins_url( 'assets/css/admin.css', __FILE__) );
 			wp_enqueue_style( 'contentking-stylesheet' );
+			
+		}
 
+		/*Styles for icons at the setting page*/
+		public function register_icon_styles(){
+			
+			wp_register_style( 'fontello-stylesheet', plugins_url( 'assets/fonts/css/fontello.css', __FILE__) );
+			wp_enqueue_style( 'fontello-stylesheet' );
+
+			wp_register_style( 'icon-stylesheet', plugins_url( 'assets/css/icons.css', __FILE__) );
+			wp_enqueue_style( 'icon-stylesheet' );
 		}
 
 	}// END class WP_Contentking{

@@ -17,10 +17,25 @@ class ContentkingWrapper extends WP_Async_Task{
 	* @return array
 	*/
 	protected function prepare_data($data){
-	//TO DO: check post type is with public link
-		return [
-		'post_id' => $data[0]
-		];
+
+		global $contentking_ids;
+
+		if( $data[1]->post_status === 'publish' ): //Post is published
+
+			$post_type_data = get_post_type_object( $data[1]->post_type );
+
+			if( intval( $post_type_data->public ) === 1 || intval( $post_type_data->publicly_queryable ) === 1 ): //Post has public URL
+
+				array_push( $contentking_ids, $data[0] ); //Only data from last call will be used in async task
+
+				return [
+					'post_id' => $data[0],
+					'ids' => json_encode( $contentking_ids ),
+				];
+
+			endif;
+		endif;
+		return null;
 	}
 
 	/**
@@ -29,8 +44,9 @@ class ContentkingWrapper extends WP_Async_Task{
 	* Calls all functions hooked to async hook
 	*/
 	protected function run_action() {
-		if( isset( $_POST[ 'post_id' ] ) && 0 < absint( $_POST[ 'post_id' ] ) ):
-			do_action( "wp_async_$this->action", get_permalink( $_POST[ 'post_id' ] ) );
+
+		if( isset( $_POST[ 'ids' ] ) ):
+			do_action( "wp_async_$this->action", $_POST[ 'ids' ] );
 		endif;
 
 	}

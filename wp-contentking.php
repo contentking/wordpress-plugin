@@ -7,7 +7,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         0.3.0
+ * Version:         0.4.0
  *
  * @package         contentking-plugin
  */
@@ -25,7 +25,8 @@ require_once CKP_ROOT_DIR . '/lib/contentking-api.php';
 require_once CKP_ROOT_DIR . '/lib/loggerInterface.php';
 require_once CKP_ROOT_DIR . '/lib/loggerFile.php';
 
-
+$contentking_ids = [];
+global $contentking_ids;
 if( !class_exists( 'WP_Contentking' ) ){
 
 	class WP_Contentking{
@@ -61,17 +62,21 @@ if( !class_exists( 'WP_Contentking' ) ){
 		} // END public function __construct
 
 		public function instantiate_async(){
-			$async = new ContentkingWrapper();
+			$async = new ContentkingWrapper(WP_Async_Task::LOGGED_IN);
 		}
 
-		public function send_to_api( $url = '' ){
+		public function send_to_api( $ids = NULL ){
 
-			if( !strlen($url) )
+			if( $ids === NULL )
 				return;
 
-			//$logger->log("Post url: " . $url . "\n", true);
+			$posts_ids = json_decode($ids);
 			$api = new ContentkingAPI();
-			$result = $api->check_url( $url ); //ToDo: check $result
+
+			foreach( $posts_ids as $id ):
+				$url = get_permalink( $id );
+				$result = $api->check_url( $url ); //ToDo: check $result
+			endforeach;
 
 		}
 
@@ -218,12 +223,12 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 			wp_register_style( 'contentking-stylesheet', plugins_url( 'assets/css/admin.css', __FILE__) );
 			wp_enqueue_style( 'contentking-stylesheet' );
-			
+
 		}
 
 		/*Styles for icons at the setting page*/
 		public function register_icon_styles(){
-			
+
 			wp_register_style( 'fontello-stylesheet', plugins_url( 'assets/fonts/css/fontello.css', __FILE__) );
 			wp_enqueue_style( 'fontello-stylesheet' );
 

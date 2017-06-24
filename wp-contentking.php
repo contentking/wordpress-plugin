@@ -112,7 +112,11 @@ if( !class_exists( 'WP_Contentking' ) ){
 		* Deactivate the plugin
 		*/
 		public static function deactivate(){
-			// Dectivation activities
+
+			//delete options from DB
+			delete_option('contentking_client_token');
+			delete_option('contentking_status_flag');
+
 		} // END public static function deactivate()
 
 

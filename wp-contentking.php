@@ -83,7 +83,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 		/**
 		* Activate the plugin
 		*/
-		public static function activate(){
+		public static function activate(){			
 
 			$flag = get_option('contentking_status_flag');
 
@@ -112,7 +112,9 @@ if( !class_exists( 'WP_Contentking' ) ){
 		* Deactivate the plugin
 		*/
 		public static function deactivate(){
-			// Dectivation activities
+
+			//nothing to do
+			
 		} // END public static function deactivate()
 
 

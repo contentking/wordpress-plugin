@@ -41,6 +41,8 @@ if( !class_exists( 'WP_Contentking' ) ){
 			register_activation_hook( __FILE__, array( &$this, 'activate' ) );
 			register_deactivation_hook( __FILE__, array( &$this, 'deactivate' ) );
 
+			register_uninstall_hook( __FILE__, array( &$this, 'clean_uninstall' ) );
+
 			// Load plugin admin menu
 			add_action( 'admin_menu', array( &$this, 'add_menu' ) );
 			add_action( 'admin_init', array( &$this, 'admin_init' ) );
@@ -83,7 +85,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 		/**
 		* Activate the plugin
 		*/
-		public static function activate(){
+		public static function activate(){			
 
 			$flag = get_option('contentking_status_flag');
 
@@ -113,10 +115,8 @@ if( !class_exists( 'WP_Contentking' ) ){
 		*/
 		public static function deactivate(){
 
-			//delete options from DB
-			delete_option('contentking_client_token');
-			delete_option('contentking_status_flag');
-
+			//nothing to do
+			
 		} // END public static function deactivate()
 
 
@@ -177,6 +177,12 @@ if( !class_exists( 'WP_Contentking' ) ){
 			// Render the main page template
 			include( sprintf("%s/screens/settings.php", dirname( __FILE__ ) ) );
 
+		}
+
+		public function clean_uninstall() {
+
+			delete_option( 'contentking_client_token' );
+			delete_option( 'contentking_status_flag' );
 		}
 
 		/*Notification area */

@@ -231,10 +231,11 @@ if( !class_exists( 'WP_Contentking' ) ){
 		/*Styles for icons at the setting page*/
 		public function register_icon_styles($hook){
 
-			if ( $hook != 'settings_page_contentking') {
+			if ( $hook != 'settings_page_contentking'):
 
 				return;
-			}
+			
+			endif;
 
 			wp_register_style( 'fontello-stylesheet', plugins_url( 'assets/fonts/css/fontello.css', __FILE__) );
 			wp_enqueue_style( 'fontello-stylesheet' );

@@ -1,6 +1,6 @@
 <?php
 
-class ContentkingWrapper extends WP_Async_Task{
+class ContentkingSavePost extends WP_Async_Task{
 
 	/**
 	* Action to use to trigger this task
@@ -18,27 +18,26 @@ class ContentkingWrapper extends WP_Async_Task{
 	*/
 	protected function prepare_data($data){
 
-		global $contentking_ids;
-		
+		global $contentking_urls;
+
 		if ( (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) ):
 			return null;
 		endif;
-		
+
 		if( $data[1]->post_status === 'publish' ): //Post is published
 
 			$post_type_data = get_post_type_object( $data[1]->post_type );
 			if( intval( $post_type_data->public ) === 1 || intval( $post_type_data->publicly_queryable ) === 1 ): //Post has public URL
 
-				array_push( $contentking_ids, $data[0] ); //Only data from last call will be used in async task
+				array_push( $contentking_urls, get_permalink( $data[0] ) ); //Only data from last call will be used in async task
 
 				return [
-					'post_id' => $data[0],
-					'ids' => json_encode( $contentking_ids ),
+					'urls' => $contentking_urls,
 				];
 
 			endif;
 		endif;
-		
+
 		return null;
 	}
 
@@ -49,8 +48,8 @@ class ContentkingWrapper extends WP_Async_Task{
 	*/
 	protected function run_action() {
 
-		if( isset( $_POST[ 'ids' ] ) ):
-			do_action( "wp_async_$this->action", $_POST[ 'ids' ] );
+		if( isset( $_POST[ 'urls' ] ) ):
+			do_action( "wp_async_$this->action", $_POST[ 'urls' ] );
 		endif;
 
 	}

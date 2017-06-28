@@ -140,8 +140,20 @@ if( !class_exists( 'WP_Contentking' ) ){
 				'contentking_setting_section'
 			);
 
-			register_setting( 'contentking_setting_section', 'contentking_client_token' );
+			register_setting( 'contentking_setting_section', 'contentking_client_token', 'sanitization_token' );
 		} // END public function admin_init
+
+
+		/**
+        * Sanitize token on save
+        */
+        public function sanitization_token($option) {
+          
+            $option = sanitize_text_field($option);
+          
+              return $option;
+              
+        }
 
 		public function contentking_setting_callback_function() {}
 

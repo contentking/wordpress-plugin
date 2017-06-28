@@ -7,7 +7,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         0.4.0
+ * Version:         0.5.0
  *
  * @package         contentking-plugin
  */
@@ -19,14 +19,16 @@ defined( 'ABSPATH' )  or die('This file should not be accessed directly!');
 define( 'CKP_ROOT_DIR', str_replace( '\\', '/', dirname(__FILE__) ) );
 define( 'CKP_ROOT_URL', rtrim( plugin_dir_url(__FILE__), '/' ) );
 require_once CKP_ROOT_DIR . '/vendor/autoload.php';
-require_once CKP_ROOT_DIR . '/lib/contentking-wrapper.php';
+require_once CKP_ROOT_DIR . '/lib/contentking-save-post.php';
+require_once CKP_ROOT_DIR . '/lib/contentking-trash-post.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-api-interface.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-api.php';
 require_once CKP_ROOT_DIR . '/lib/loggerInterface.php';
 require_once CKP_ROOT_DIR . '/lib/loggerFile.php';
 
-$contentking_ids = [];
-global $contentking_ids;
+$contentking_urls = [];
+global $contentking_urls;
+
 if( !class_exists( 'WP_Contentking' ) ){
 
 	class WP_Contentking{
@@ -56,25 +58,26 @@ if( !class_exists( 'WP_Contentking' ) ){
 			add_action('plugins_loaded', array(&$this, 'instantiate_async'));
 			//Register for save_post action
 			add_action( 'wp_async_save_post', array( &$this, 'send_to_api' ) );
+			//Register for save_post action
+			add_action( 'wp_async_wp_trash_post', array( &$this, 'send_to_api' ) );
 			//Register for client token updates
 			add_action( 'update_option_contentking_client_token', array( &$this, 'check_new_token' ) );
 
 		} // END public function __construct
 
 		public function instantiate_async(){
-			$async = new ContentkingWrapper(WP_Async_Task::LOGGED_IN);
+			$async_save_post 	= new ContentkingSavePost(WP_Async_Task::LOGGED_IN);
+			$async_trash_post = new ContentkingTrashPost(WP_Async_Task::LOGGED_IN);
 		}
 
-		public function send_to_api( $ids = NULL ){
+		public function send_to_api( $urls = NULL ){
 
-			if( $ids === NULL )
+			if( $urls === NULL )
 				return;
 
-			$posts_ids = json_decode($ids);
 			$api = new ContentkingAPI();
 
-			foreach( $posts_ids as $id ):
-				$url = get_permalink( $id );
+			foreach( $urls as $url ):
 				$result = $api->check_url( $url ); //ToDo: check $result
 			endforeach;
 
@@ -83,7 +86,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 		/**
 		* Activate the plugin
 		*/
-		public static function activate(){			
+		public static function activate(){
 
 			$flag = get_option('contentking_status_flag');
 
@@ -114,7 +117,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 		public static function deactivate(){
 
 			//nothing to do
-			
+
 		} // END public static function deactivate()
 
 
@@ -234,7 +237,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 			if ( $hook != 'settings_page_contentking'):
 
 				return;
-			
+
 			endif;
 
 			wp_register_style( 'fontello-stylesheet', plugins_url( 'assets/fonts/css/fontello.css', __FILE__) );

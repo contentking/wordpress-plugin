@@ -10,6 +10,13 @@ class ContentkingTrashPost extends WP_Async_Task{
 	protected $action = 'wp_trash_post'; //Fires before a post is sent to the trash.
 
 	/**
+	* Array of urls to be sent to API
+	*
+	* @var array
+	*/
+	private $urls = [];
+	
+	/**
 	* Prepare POST data to send to session that processes the task
 	*
 	* @param array $data Params from hook
@@ -18,17 +25,16 @@ class ContentkingTrashPost extends WP_Async_Task{
 	*/
 	protected function prepare_data($data){
 
-		global $contentking_urls;
+
 
 			$post_obj = get_post( $data[0] );
 
 			$post_type_data = get_post_type_object( $post_obj->post_type );
 			if( intval( $post_type_data->public ) === 1 || intval( $post_type_data->publicly_queryable ) === 1 ): //Post has public URL
 
-				array_push( $contentking_urls, get_permalink($data[0]) ); //Only data from last call will be used in async task
-
+				array_push( $this->urls, get_permalink($data[0]) );
 				return [
-					'urls' => $contentking_urls,
+					'urls' => $this->urls,
 				];
 
 			endif;

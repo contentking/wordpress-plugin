@@ -10,6 +10,13 @@ class ContentkingSavePost extends WP_Async_Task{
 	protected $action = 'save_post'; //action triggered whenever a post (even custom) or page is created or updated, which could be from an import, post/page edit form, xmlrpc, or post by email
 
 	/**
+	* Array of urls to be sent to API
+	*
+	* @var array
+	*/
+	private $urls = [];
+
+	/**
 	* Prepare POST data to send to session that processes the task
 	*
 	* @param array $data Params from hook
@@ -17,8 +24,6 @@ class ContentkingSavePost extends WP_Async_Task{
 	* @return array
 	*/
 	protected function prepare_data($data){
-
-		global $contentking_urls;
 
 		if ( (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) ):
 			return null;
@@ -29,10 +34,10 @@ class ContentkingSavePost extends WP_Async_Task{
 			$post_type_data = get_post_type_object( $data[1]->post_type );
 			if( intval( $post_type_data->public ) === 1 || intval( $post_type_data->publicly_queryable ) === 1 ): //Post has public URL
 
-				array_push( $contentking_urls, get_permalink( $data[0] ) ); //Only data from last call will be used in async task
+				array_push( $this->urls, get_permalink( $data[0] ) ); //Only data from last call will be used in async task
 
 				return [
-					'urls' => $contentking_urls,
+					'urls' => $this->urls,
 				];
 
 			endif;

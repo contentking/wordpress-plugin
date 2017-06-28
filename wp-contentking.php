@@ -7,7 +7,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         0.5.0
+ * Version:         0.5.1
  *
  * @package         contentking-plugin
  */
@@ -26,8 +26,6 @@ require_once CKP_ROOT_DIR . '/lib/contentking-api.php';
 require_once CKP_ROOT_DIR . '/lib/loggerInterface.php';
 require_once CKP_ROOT_DIR . '/lib/loggerFile.php';
 
-$contentking_urls = [];
-global $contentking_urls;
 
 if( !class_exists( 'WP_Contentking' ) ){
 

@@ -7,7 +7,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         0.5.1
+ * Version:         0.5.2
  *
  * @package         contentking-plugin
  */
@@ -76,7 +76,11 @@ if( !class_exists( 'WP_Contentking' ) ){
 			$api = new ContentkingAPI();
 
 			foreach( $urls as $url ):
-				$result = $api->check_url( $url ); //ToDo: check $result
+				$result = $api->check_url( $url );
+				if( $result === false ): //Bad token, deactivate sending to API
+					update_option('contentking_status_flag', '0');
+					break;
+				endif;
 			endforeach;
 
 		}
@@ -148,11 +152,11 @@ if( !class_exists( 'WP_Contentking' ) ){
         * Sanitize token on save
         */
         public function sanitization_token($option) {
-          
+
             $option = sanitize_text_field($option);
-          
+
               return $option;
-              
+
         }
 
 		public function contentking_setting_callback_function() {}

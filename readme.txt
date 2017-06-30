@@ -1,0 +1,14 @@
+=== ContentKing ===
+Contributors: contentking,buzzycat
+Tags: contentking, seo monitoring
+Requires at least: 3.3
+Tested up to: 4.8
+Stable tag: trunk
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Real-time SEO auditing and content tracking for your website.
+
+== Changelog ==
+
+= 0.6.0 = First public version.

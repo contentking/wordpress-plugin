@@ -1,6 +1,6 @@
 # Contentking WordPress plugin
 
- Real-time SEO auditing and content tracking for your website. 
+Real-time SEO auditing and content tracking for your website. 
 
 ## Installation
 

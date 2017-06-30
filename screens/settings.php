@@ -8,20 +8,21 @@ endif;
 
 ?>
 
-<h1> <?php _e('Contentking settings', 'contentking-plugin'); ?></h1>
+<h1> <?php _e('ContentKing settings', 'contentking-plugin'); ?></h1>
 <form action="options.php" method="post">
 
 <?php
 		settings_fields('contentking_setting_section');
 		$contentking_client_token = get_option('contentking_client_token');
 ?>
+
 	<table class = "contentking-setting">
 		<tr>
-			<th scope="row"> <?php _e( 'Token', 'contentking-plugin' );?> </th>
+			<th scope="row"> <?php _e( 'API token', 'contentking-plugin' );?> </th>
 			<td><input type="text" id="contentking_client_token" name="contentking_client_token" value="<?php echo $contentking_client_token; ?>" />	</td>
 			<td>
 				<?php
-				
+
 				$flag = get_option('contentking_status_flag');
 				if ($flag === '1'):	?>
 
@@ -39,5 +40,17 @@ endif;
 
 	<input type="hidden" name="update_contentking_token" value="1"/>
 	<br>
-	<input name="Submit" type="submit" class="button button-primary" value="<?php  _e('Save Changes', 'contentking-plugin'); ?>" />
+	<input name="Submit" type="submit" class="button button-primary" value="<?php  _e('Save changes', 'contentking-plugin'); ?>" />
 </form>
+<h2> <?php _e('Instructions', 'contentking-plugin'); ?></h2>
+<ol>
+	<li><?php _e( 'In a new window, log in to the ContentKing app.','contentking-plugin'); ?></li>
+	<li><?php _e( 'Go to <strong>Account</strong> then <strong>Team profile</strong>.','contentking-plugin'); ?></li>
+	<li><?php _e( 'Copy the API token from the <strong>Integrations</strong> section <i>(make sure it\'s from the appropriate website)</i>.','contentking-plugin'); ?></li>
+	<li><?php _e( 'Come back to this WordPress screen and paste the token into the <strong>API token</strong> field.','contentking-plugin'); ?></li>
+	<li><?php _e( 'Press <strong>Save changes</strong> and once you see the green validation tick mark, you\'re good to go.','contentking-plugin'); ?></li>
+</ol>
+<p>
+<?php _e( 'The ContentKing plugin is active when you see its name in green in the upper WordPress bar.<br/>
+As always, our Support team is ready to help if you have any trouble.'); ?>
+</p>

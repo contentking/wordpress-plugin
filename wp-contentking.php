@@ -1,13 +1,12 @@
 <?php
 /**
- * Plugin Name:     Contentking
- * Plugin URI:      PLUGIN SITE HERE
- * Description:     PLUGIN DESCRIPTION HERE
- * Author:          Contentking
+ * Plugin Name:     ContentKing
+ * Description:     Ensures changes of your WordPress websites are in app and always up-to-date.
+ * Author:          ContentKing
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         0.5.2
+ * Version:         0.6.0
  *
  * @package         contentking-plugin
  */
@@ -131,14 +130,14 @@ if( !class_exists( 'WP_Contentking' ) ){
 			//Register settings
 			add_settings_section(
 				'contentking_setting_section',
-				__( 'Example settings section in contentking', 'contentking-plugin' ),
+				__( 'Settings section in ContentKing', 'contentking-plugin' ),
 				array( &$this,'contentking_setting_callback_function' ),
 				'contentking'
 			);
 
 			add_settings_field(
 				'contentking_client_token',
-				'Contentking token',
+				'ContentKing API token',
 				 array( &$this,'contentking_setting_callback_function' ),
 				'contentking',
 				'contentking_setting_section'
@@ -149,15 +148,15 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 
 		/**
-        * Sanitize token on save
-        */
-        public function sanitization_token($option) {
+     * Sanitize token on save
+     */
+    public function sanitization_token($option) {
 
-            $option = sanitize_text_field($option);
+    	$option = sanitize_text_field($option);
 
-              return $option;
+      return $option;
 
-        }
+    }
 
 		public function contentking_setting_callback_function() {}
 
@@ -178,7 +177,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 		public function add_menu(){
 
 			global $menu, $submenu;
-			add_submenu_page( 'options-general.php', __('Contentking plugin', 'contentking-plugin'), __('Contentking', 'contentking-plugin'), 'manage_options', 'contentking', array( &$this, 'view_plugin_screen' ));
+			add_submenu_page( 'options-general.php', __('ContentKing plugin', 'contentking-plugin'), __('ContentKing', 'contentking-plugin'), 'manage_options', 'contentking', array( &$this, 'view_plugin_screen' ));
 
 		}
 
@@ -210,10 +209,10 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 				$args = [
 					'id' => 'contentking',
-					'title' => '<span>'.__( 'Contentking', 'contentking-plugin' ).'</span>',
+					'title' => '<span>'.__( 'ContentKing', 'contentking-plugin' ).'</span>',
 					'href' => get_admin_url() . 'options-general.php?page=contentking',
 					'meta' => [
-						'title' => 'Contentking',
+						'title' => 'ContentKing',
 						'class' => 'contentking-green-notification',
 					],
 				];
@@ -223,10 +222,10 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 				$args = [
 					'id' => 'contentking',
-					'title' => '<span> '.__( 'Contentking', 'contentking-plugin' ).'</span>',
+					'title' => '<span> '.__( 'ContentKing', 'contentking-plugin' ).'</span>',
 					'href' => get_admin_url() . 'options-general.php?page=contentking',
 					'meta' => [
-						'title' => 'Contentking',
+						'title' => 'ContentKing',
 						'class' => 'contentking-red-notification'
 					],
 				];

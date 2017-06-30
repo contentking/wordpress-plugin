@@ -15,8 +15,12 @@
 
 // Prevent direct access to this file.
 defined( 'ABSPATH' )  or die('This file should not be accessed directly!');
+
+// Plugin constants
 define( 'CKP_ROOT_DIR', str_replace( '\\', '/', dirname(__FILE__) ) );
 define( 'CKP_ROOT_URL', rtrim( plugin_dir_url(__FILE__), '/' ) );
+
+// Include libraries
 require_once CKP_ROOT_DIR . '/vendor/autoload.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-save-post.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-trash-post.php';
@@ -62,11 +66,20 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 		} // END public function __construct
 
+		/**
+		* Instantiate WP_Async_Task for each hook.
+		*/
 		public function instantiate_async(){
 			$async_save_post 	= new ContentkingSavePost(WP_Async_Task::LOGGED_IN);
 			$async_trash_post = new ContentkingTrashPost(WP_Async_Task::LOGGED_IN);
 		}
 
+		/*
+		* Performs api calls to send URL to Contentking.
+		*
+		* @param array $urls array of URLs to be sent to Contentking.
+		* @return void
+		*/
 		public function send_to_api( $urls = NULL ){
 
 			if( $urls === NULL )
@@ -160,6 +173,14 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 		public function contentking_setting_callback_function() {}
 
+			/*
+			* Performs api call to check API token on save.
+			*
+			* @param string $old_value Old token value
+			* @param string $new_value New token value
+			* @param string $option  Option name
+			* @return Bool
+			*/
 		public function check_new_token($old_value, $value, $option) {
 
 			//sending request to Contentking API
@@ -173,7 +194,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 		}
 
-
+		/*Create menu item in WP admin*/
 		public function add_menu(){
 
 			global $menu, $submenu;
@@ -194,7 +215,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 		}
 
 		/*Notification area */
-		public function notification_button($wp_admin_bar){
+		public function notification_button( $wp_admin_bar ){
 
 			if( !current_user_can( 'manage_options' ) ):
 				wp_die( __( 'You do not have sufficient permissions to access this page.', 'contentking-plugin' ) );
@@ -247,11 +268,8 @@ if( !class_exists( 'WP_Contentking' ) ){
 		/*Styles for icons at the setting page*/
 		public function register_icon_styles($hook){
 
-			if ( $hook != 'settings_page_contentking'):
-
+			if ( $hook != 'settings_page_contentking')
 				return;
-
-			endif;
 
 			wp_register_style( 'fontello-stylesheet', plugins_url( 'assets/fonts/css/fontello.css', __FILE__) );
 			wp_enqueue_style( 'fontello-stylesheet' );

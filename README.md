@@ -1,6 +1,6 @@
 # Contentking WordPress plugin
 
-Helps you with your online-SEO monitoring by automatically prioritizing newly added content. 
+ Real-time SEO auditing and content tracking for your website. 
 
 ## Installation
 

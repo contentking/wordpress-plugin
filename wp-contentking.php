@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:     ContentKing
- * Description:     Ensures changes of your WordPress websites are in app and always up-to-date.
+ * Description:     Real-time SEO auditing and content tracking for your website.
  * Author:          ContentKing
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin

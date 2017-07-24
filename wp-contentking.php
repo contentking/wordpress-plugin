@@ -6,7 +6,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         0.6.0
+ * Version:         0.6.1
  *
  * @package         contentking-plugin
  */

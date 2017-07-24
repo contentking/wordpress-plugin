@@ -46,7 +46,7 @@ endif;
 <ol>
 	<li><?php _e( 'In a new window, log in to the ContentKing app.','contentking-plugin'); ?></li>
 	<li><?php _e( 'Go to <strong>Account</strong> then <strong>Team profile</strong>.','contentking-plugin'); ?></li>
-	<li><?php _e( 'Copy the API token from the <strong>Integrations</strong> section <i>(make sure it\'s from the appropriate website)</i>.','contentking-plugin'); ?></li>
+	<li><?php _e( 'Copy the API token from the <strong>Integrations</strong> section.','contentking-plugin'); ?></li>
 	<li><?php _e( 'Come back to this WordPress screen and paste the token into the <strong>API token</strong> field.','contentking-plugin'); ?></li>
 	<li><?php _e( 'Press <strong>Save changes</strong> and once you see the green validation tick mark, you\'re good to go.','contentking-plugin'); ?></li>
 </ol>

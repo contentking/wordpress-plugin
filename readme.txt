@@ -11,4 +11,6 @@ Real-time SEO auditing and content tracking for your website.
 
 == Changelog ==
 
+= 0.6.2 = Minor bug fixes.
+= 0.6.1 = Contributors list fix.
 = 0.6.0 = First public version.

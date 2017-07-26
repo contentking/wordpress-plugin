@@ -6,7 +6,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         0.6.2
+ * Version:         0.6.3
  *
  * @package         contentking-plugin
  */
@@ -36,7 +36,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 		* Construct the plugin object
 		*/
 		public function __construct(){
-			
+
 			/*Prevents curl fatal error when creating async task via wp-async-task*/
 			add_filter( 'https_local_ssl_verify', '__return_false' );
 

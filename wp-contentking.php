@@ -36,6 +36,9 @@ if( !class_exists( 'WP_Contentking' ) ){
 		* Construct the plugin object
 		*/
 		public function __construct(){
+			
+			/*Prevents curl fatal error when creating async task via wp-async-task*/
+			add_filter( 'https_local_ssl_verify', '__return_false' );
 
 			load_textdomain('contentking-plugin', CKP_ROOT_DIR. '/languages/wp-contentking-' . get_locale() . '.mo');
 			// Register hooks that are fired when the plugin is activated and deactivated.

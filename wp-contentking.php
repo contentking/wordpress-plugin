@@ -141,6 +141,11 @@ if( !class_exists( 'WP_Contentking' ) ){
 		*/
 		public function admin_init(){
 
+			if ( version_compare( phpversion(), '5.5.0', '<' ) ):
+				deactivate_plugins( plugin_basename( __FILE__ ) );
+				wp_die( 'This plugin requires PHP Version 5.5. Your current version is '. phpversion() );
+			endif;
+
 			//Register settings
 			add_settings_section(
 				'contentking_setting_section',

@@ -6,7 +6,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         0.6.3
+ * Version:         1.0.0
  *
  * @package         contentking-plugin
  */
@@ -209,7 +209,20 @@ if( !class_exists( 'WP_Contentking' ) ){
 			if( !current_user_can( 'manage_options' ) ):
 				wp_die( __( 'You do not have sufficient permissions to access this page.', 'contentking-plugin' ) );
 			endif;
+			// if this fails, check_admin_referer() will automatically print a "failed" page and die.
+			if ( ! empty( $_POST ) && check_admin_referer( 'contentking_validate_token', 'ck_validate_token' ) ) {
+   			if( isset( $_POST['validate_contentking_token'] ) && $_POST['validate_contentking_token'] === '1' ):
+					//Attempt to validate token
+					$api = new ContentkingAPI();
 
+					if( $api->check_token() === true):
+						update_option('contentking_status_flag', '1');
+					else:
+						update_option('contentking_status_flag', '0');
+					endif;
+
+				endif;
+			}
 			// Render the main page template
 			include( sprintf("%s/screens/settings.php", dirname( __FILE__ ) ) );
 

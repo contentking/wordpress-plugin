@@ -39,9 +39,25 @@ endif;
 	</table>
 
 	<input type="hidden" name="update_contentking_token" value="1"/>
-	<br>
+	<br/>
 	<input name="Submit" type="submit" class="button button-primary" value="<?php  _e('Save changes', 'contentking-plugin'); ?>" />
 </form>
+<br/>
+<?php
+	if( strlen($contentking_client_token) > 5 &&  $flag === '0' ):
+ ?>
+	<form method="post">
+  	<?php wp_nonce_field( 'contentking_validate_token', 'ck_validate_token' ); ?>
+		<input type="hidden" name="validate_contentking_token" value="1"/>
+		<input name="Validate" type="submit" class="button button-primary" value="<?php  _e('Validate token', 'contentking-plugin'); ?>" />
+		<p class="error">
+		<?php _e( 'It looks like your API token is not validated. Click to validate.','contentking-plugin'); ?>
+	</p>
+	</form>
+
+<?php
+	endif;
+ ?>
 <h2> <?php _e('Instructions', 'contentking-plugin'); ?></h2>
 <ol>
 	<li><?php _e( 'In a new window, log in to the ContentKing app.','contentking-plugin'); ?></li>

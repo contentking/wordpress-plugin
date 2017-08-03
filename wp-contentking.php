@@ -6,7 +6,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         1.0.0
+ * Version:         1.1.0
  *
  * @package         contentking-plugin
  */
@@ -317,7 +317,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 				//Redirect to admin editor with obtained post id
 				wp_safe_redirect( admin_url( "post.php?post=$post_id&action=edit" ) );
-				
+
 			endif;
 			return;
 		}

@@ -11,7 +11,7 @@ Real-time SEO auditing and content tracking for your website.
 == Requirements ==
 Plugin requires PHP version >= 5.5.
 == Changelog ==
-= 1.1.0 =
+= 1.0.1 = Call API after other hooked functions are done.
 = 1.0.0 = Added API token re-validation.
 = 0.6.3 = Fixed bug with SSL-enabled websites.
 = 0.6.2 = Minor bug fixes.

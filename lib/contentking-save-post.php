@@ -14,7 +14,7 @@ class ContentkingSavePost extends WP_Async_Task{
 	 *
 	 * @var int
 	 */
-	protected $priority = 9999; //We need this to have pretty high to make sure all other actions are done
+	protected $priority = 9999; //We need this to have pretty high to make sure all other actions are done.
 
 	/**
 	* Array of urls to be sent to API

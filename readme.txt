@@ -11,7 +11,6 @@ Real-time SEO auditing and content tracking for your website.
 == Requirements ==
 Plugin requires PHP version >= 5.5.
 == Changelog ==
-= 1.1.0 = New feature - access WordPress editor directly via link in ContentKing app.
 = 1.0.0 = Added API token re-validation.
 = 0.6.3 = Fixed bug with SSL-enabled websites.
 = 0.6.2 = Minor bug fixes.

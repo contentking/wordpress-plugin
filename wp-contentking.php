@@ -6,7 +6,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         1.1.0
+ * Version:         1.0.0
  *
  * @package         contentking-plugin
  */
@@ -64,10 +64,6 @@ if( !class_exists( 'WP_Contentking' ) ){
 			add_action( 'wp_async_wp_trash_post', array( &$this, 'send_to_api' ) );
 			//Register for client token updates
 			add_action( 'update_option_contentking_client_token', array( &$this, 'check_new_token' ) );
-			//Check direct edit redirection
-			add_action( 'admin_init', array( &$this, 'maybe_edit_redirect' ) );
-			//Return post id for given URL
-			add_action( 'template_redirect', array( &$this, 'get_post_id_from_url' ) );
 
 		} // END public function __construct
 
@@ -299,58 +295,6 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 			wp_register_style( 'icon-stylesheet', plugins_url( 'assets/css/icons.css', __FILE__) );
 			wp_enqueue_style( 'icon-stylesheet' );
-		}
-
-		/**
-		* Checks $_GET['ck_redirect'], if set tries to determine post ID of URL
-		* given in it. If post exists, redirects to WP editor.
-		*
-		* @return   void
-		*/
-		public function maybe_edit_redirect(){
-			if( !empty($_GET) && isset( $_GET['ck_redirect'] ) ):
-				//Validate $_GET['ck_redirect']
-				$url = wp_validate_redirect( $_GET['ck_redirect'], '' );
-				if( $url === '' )
-					return;
-				//Try to get post id
-				$args = [
-						'body' => array( 'ck_get_post_id' => 'get' )
-				];
-				//Get post id for given URL
-				$response = wp_remote_post( $url, $args );
-				$post_id = intval( json_decode( $response['body'] ) );
-				//Check whether post with obtained ID exists
-				if( !$this->post_exists( $post_id ) )
-					return;
-				//Redirect to admin editor with obtained post id
-				wp_safe_redirect( admin_url( "post.php?post=$post_id&action=edit" ) );
-				exit;
-			endif;
-			return;
-		}
-
-		/**
- 		* Checks $_POST['ck_get_post_id'] flag and if set, echoes json-encoded
-		* id of post for requested URL.
- 		* @return   void
- 		*/
-		public function get_post_id_from_url(){
-			if( !empty($_POST) && isset( $_POST['ck_get_post_id'] ) && $_POST['ck_get_post_id'] === 'get' ):
-				global $post;
-				echo json_encode( $post->ID );
-				die();
-			endif;
-		}
-
-		/**
- 		* Determines if a post, identified by the specified ID, exist
- 		* within the WordPress database.
- 		* @param    int    $post_id    The ID of the post to check
- 		* @return   bool          True if the post exists; otherwise, false.
- 		*/
-		public function post_exists( $post_id ){
-			return is_string( get_post_status( $post_id ) );
 		}
 
 	}// END class WP_Contentking{

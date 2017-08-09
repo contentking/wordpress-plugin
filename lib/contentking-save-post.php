@@ -10,6 +10,13 @@ class ContentkingSavePost extends WP_Async_Task{
 	protected $action = 'save_post'; //action triggered whenever a post (even custom) or page is created or updated, which could be from an import, post/page edit form, xmlrpc, or post by email
 
 	/**
+	 * Priority to fire intermediate action.
+	 *
+	 * @var int
+	 */
+	protected $priority = 9999; //We need this to have pretty high to make sure all other actions are done
+
+	/**
 	* Array of urls to be sent to API
 	*
 	* @var array

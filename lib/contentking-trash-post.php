@@ -10,6 +10,13 @@ class ContentkingTrashPost extends WP_Async_Task{
 	protected $action = 'wp_trash_post'; //Fires before a post is sent to the trash.
 
 	/**
+	 * Priority to fire intermediate action.
+	 *
+	 * @var int
+	 */
+	protected $priority = 9999; //We need this to have pretty high to make sure all other actions are done.
+
+	/**
 	* Array of urls to be sent to API
 	*
 	* @var array

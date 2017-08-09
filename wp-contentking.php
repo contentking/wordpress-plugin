@@ -66,8 +66,10 @@ if( !class_exists( 'WP_Contentking' ) ){
 			add_action( 'update_option_contentking_client_token', array( &$this, 'check_new_token' ) );
 			//Create REST API endpoint
 			add_action( 'rest_api_init', array( &$this,'rest_admin_edit_url' ) );
-			// Get post id from URL
+			//Get post id from URL
 			add_action( 'template_redirect', array( &$this,'get_post_id_from_url' )  );
+			//Send WP version after upgrading
+			add_action( 'upgrader_process_complete', array( &$this,'after_upgrade_tasks' ), 90, 2 ); 
 
 		} // END public function __construct
 
@@ -203,6 +205,22 @@ if( !class_exists( 'WP_Contentking' ) ){
 			endif;
 
 		}
+
+
+		public function after_upgrade_tasks($upgrader, $hook_extra) {
+			
+			if ( ( $hook_extra['type'] === 'plugin') || ( $hook_extra['type'] === 'core' ) ) :
+
+				$api = new ContentkingAPI();
+
+				if( $api->check_token() === true ):
+					update_option( 'contentking_status_flag', '1' );
+				else:
+					update_option( 'contentking_status_flag', '0' );
+				endif;
+
+			endif;
+		} 
 
 		/*Create menu item in WP admin*/
 		public function add_menu(){

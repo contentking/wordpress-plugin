@@ -11,12 +11,14 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	* @return Bool
 	*/
 	public function check_token( $token = '' ){
+		
+		global $wp_version;
 
 		if( $token === '' ):
 			$token = get_option( 'contentking_client_token' );
 		endif;
 
-		$data = $this->prepare_request_data( ['token' => $token] );
+		$data = $this->prepare_request_data( ['token' => $token, 'wp_version' => $wp_version] );
 		$response = wp_remote_post( $this->api_url . 'check_token', $data );
 		if ( is_wp_error( $response ) ):
 			return false;
@@ -64,7 +66,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	*/
 	private function prepare_request_data( $data = [] ){
 
-		if(empty($data))
+		if( empty($data) )
 			return [];
 
 		if( isset( $data['token'] ) ):
@@ -72,6 +74,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 		else:
 			$token = get_option( 'contentking_client_token' );
 		endif;
+
 
 		$prepared_data = [
 			'headers' => [
@@ -82,6 +85,10 @@ class ContentkingAPI implements ContentkingAPIInterface {
 		$prepared_data['body'] = json_encode([]);
 		if( isset( $data['url'] ) ):
 			$prepared_data['body'] = json_encode(['url' => $data['url']]);
+		endif;
+
+		if( isset( $data['wp_version'] ) ):
+			$prepared_data['body'] = json_encode(['wp_version' => $data['wp_version']]);
 		endif;
 
 		return $prepared_data;

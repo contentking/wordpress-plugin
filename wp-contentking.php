@@ -6,7 +6,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         1.0.1
+ * Version:         1.1.0
  *
  * @package         contentking-plugin
  */
@@ -64,6 +64,10 @@ if( !class_exists( 'WP_Contentking' ) ){
 			add_action( 'wp_async_wp_trash_post', array( &$this, 'send_to_api' ) );
 			//Register for client token updates
 			add_action( 'update_option_contentking_client_token', array( &$this, 'check_new_token' ) );
+			//Create REST API endpoint
+			add_action( 'rest_api_init', array( &$this,'rest_admin_edit_url' ) );
+			// Get post id from URL
+			add_action( 'template_redirect', array( &$this,'get_post_id_from_url' )  );
 
 		} // END public function __construct
 
@@ -169,9 +173,9 @@ if( !class_exists( 'WP_Contentking' ) ){
 		/**
      * Sanitize token on save
      */
-    public function sanitization_token($option) {
+    public function sanitization_token( $option ) {
 
-    	$option = sanitize_text_field($option);
+    	$option = sanitize_text_field( $option );
 
       return $option;
 
@@ -187,15 +191,15 @@ if( !class_exists( 'WP_Contentking' ) ){
 			* @param string $option  Option name
 			* @return Bool
 			*/
-		public function check_new_token($old_value, $value, $option) {
+		public function check_new_token( $old_value, $value, $option ) {
 
 			//sending request to Contentking API
 			$api = new ContentkingAPI();
 
-			if( $api->check_token( $value ) === true):
-				update_option('contentking_status_flag', '1');
+			if( $api->check_token( $value ) === true ):
+				update_option( 'contentking_status_flag', '1' );
 			else:
-				update_option('contentking_status_flag', '0');
+				update_option( 'contentking_status_flag', '0' );
 			endif;
 
 		}
@@ -274,6 +278,76 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 			$wp_admin_bar->add_node( $args );
 
+		}
+
+		/*
+		* Return post id for given URL.
+		*
+		* @return Int post id or 0 when URL is not a single post or page
+		*/
+		public function get_post_id_from_url(){
+
+			if( !empty( $_POST ) && isset( $_POST['ck_get_url'] ) ):
+				if( is_single() || is_page() ):
+					global $post;
+					echo json_encode( $post->ID );
+				else:
+					echo json_encode( 0 );
+				endif;
+				die();
+			endif;
+
+		}
+
+		/*
+		* Creates REST API endpoint for ContentKing APP to get WP admin_url
+		* URL for given public post URL.
+		* @return void
+		*/
+		public function rest_admin_edit_url(){
+
+			register_rest_route( 'contentking/v1', '/admin_url/', array(
+
+					'methods' => 'POST',
+					'callback' => array( &$this,'get_admin_url' ),
+
+				)
+			);
+
+		}
+
+		/*
+		* Callback function for contentking/v1/admin_url endpoint.
+		*
+		* @param WP_REST_Request $data REST request data
+		* @return string Admin URL or "false".
+		*/
+		public function get_admin_url( $data ){
+
+			$headers = $data->get_headers();
+			//Verify token
+			if ( isset( $headers['contentking_token'] ) ):
+				if ( $headers['contentking_token'][0] === get_option( 'contentking_client_token' ) ):
+
+					$array_data = (array) $data->get_body();
+					$decoded_data = json_decode( $array_data[0], true ) ;
+
+					if( isset( $decoded_data['url'] ) ):
+						//Try to get post id from public URL
+						$args = array( 'body' => array( 'ck_get_url' => 'true' ) );
+						$response = wp_remote_post( $decoded_data['url'], $args );
+						$post_id = json_decode( $response['body'] );
+
+						if( $post_id > 0 ):
+							return json_encode( admin_url( 'post.php' ) . "?post=$post_id&action=edit" );
+						endif;
+
+					endif;
+
+					return json_encode( false );
+
+				endif;
+			endif;
 		}
 
 		/*Styles for top admin bar notifcation area*/

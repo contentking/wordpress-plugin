@@ -173,9 +173,9 @@ if( !class_exists( 'WP_Contentking' ) ){
 		/**
      * Sanitize token on save
      */
-    public function sanitization_token($option) {
+    public function sanitization_token( $option ) {
 
-    	$option = sanitize_text_field($option);
+    	$option = sanitize_text_field( $option );
 
       return $option;
 
@@ -191,15 +191,15 @@ if( !class_exists( 'WP_Contentking' ) ){
 			* @param string $option  Option name
 			* @return Bool
 			*/
-		public function check_new_token($old_value, $value, $option) {
+		public function check_new_token( $old_value, $value, $option ) {
 
 			//sending request to Contentking API
 			$api = new ContentkingAPI();
 
-			if( $api->check_token( $value ) === true):
-				update_option('contentking_status_flag', '1');
+			if( $api->check_token( $value ) === true ):
+				update_option( 'contentking_status_flag', '1' );
 			else:
-				update_option('contentking_status_flag', '0');
+				update_option( 'contentking_status_flag', '0' );
 			endif;
 
 		}
@@ -287,12 +287,12 @@ if( !class_exists( 'WP_Contentking' ) ){
 		*/
 		public function get_post_id_from_url(){
 
-			if(!empty($_POST) && isset($_POST['ck_get_url']) ):
+			if( !empty( $_POST ) && isset( $_POST['ck_get_url'] ) ):
 				if( is_single() || is_page() ):
 					global $post;
-					echo json_encode($post->ID);
+					echo json_encode( $post->ID );
 				else:
-					echo json_encode(0);
+					echo json_encode( 0 );
 				endif;
 				die();
 			endif;
@@ -326,25 +326,25 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 			$headers = $data->get_headers();
 			//Verify token
-			if ( isset($headers['contentking_token']) ):
-				if ($headers['contentking_token'][0] === get_option('contentking_client_token')):
+			if ( isset( $headers['contentking_token'] ) ):
+				if ( $headers['contentking_token'][0] === get_option( 'contentking_client_token' ) ):
 
 					$array_data = (array) $data->get_body();
 					$decoded_data = json_decode( $array_data[0], true ) ;
 
 					if( isset( $decoded_data['url'] ) ):
 						//Try to get post id from public URL
-						$args = array( 'body' => array(  'ck_get_url' => 'true' ) );
-						$response = wp_remote_post($decoded_data['url'], $args);
-						$post_id = json_decode($response['body']);
+						$args = array( 'body' => array( 'ck_get_url' => 'true' ) );
+						$response = wp_remote_post( $decoded_data['url'], $args );
+						$post_id = json_decode( $response['body'] );
 
-						if($post_id > 0):
-							return json_encode( admin_url('post.php') . "?post=$post_id&action=edit" );
+						if( $post_id > 0 ):
+							return json_encode( admin_url( 'post.php' ) . "?post=$post_id&action=edit" );
 						endif;
 
 					endif;
 
-					return json_encode(false);
+					return json_encode( false );
 
 				endif;
 			endif;

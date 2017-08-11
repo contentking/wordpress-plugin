@@ -13,6 +13,8 @@ Plugin requires PHP version >= 5.5.
 
 == Changelog ==
 
+= 1.3.0 = Send events along with check token request.
+= 1.2.0 = Send WP version on upgrade is added.
 = 1.1.0 = REST API endpoint added.
 = 1.0.1 = Call API after other hooked functions are done.
 = 1.0.0 = Added API token re-validation.

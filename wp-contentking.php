@@ -6,7 +6,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         1.3.0
+ * Version:         1.4.0
  *
  * @package         contentking-plugin
  */
@@ -24,6 +24,7 @@ define( 'CKP_ROOT_URL', rtrim( plugin_dir_url(__FILE__), '/' ) );
 require_once CKP_ROOT_DIR . '/vendor/autoload.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-save-post.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-trash-post.php';
+require_once CKP_ROOT_DIR . '/lib/contentking-sitemap-change.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-api-interface.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-api.php';
 
@@ -60,6 +61,8 @@ if( !class_exists( 'WP_Contentking' ) ){
 			add_action('plugins_loaded', array(&$this, 'instantiate_async'));
 			//Register for save_post action
 			add_action( 'wp_async_save_post', array( &$this, 'send_to_api' ) );
+			//Register for contentking_updated_sitemap action
+			add_action( 'wp_async_contentking_updated_sitemap', array( &$this, 'send_to_api' ) );
 			//Register for wp_trash_post action
 			add_action( 'wp_async_wp_trash_post', array( &$this, 'send_to_api' ) );
 			//Register for client token updates
@@ -70,6 +73,8 @@ if( !class_exists( 'WP_Contentking' ) ){
 			add_action( 'template_redirect', array( &$this,'get_post_id_from_url' )  );
 			//Send WP version after upgrading
 			add_action( 'upgrader_process_complete', array( &$this,'after_upgrade_tasks' ), 90, 2 );
+			//Define new action for XML sitemap
+			add_action( 'admin_init', array( &$this, 'define_action_contentking_updated_sitemap' ) );
 			
 
 		} // END public function __construct
@@ -233,6 +238,16 @@ if( !class_exists( 'WP_Contentking' ) ){
 			endif;	
 		
 		} 
+
+		/*Define action for update XML sitemap*/
+		public function define_action_contentking_updated_sitemap() {
+
+			if ( isset( $_POST['wpseo_xml'] ) ):
+
+				do_action( 'contentking_updated_sitemap');
+			
+			endif;
+		}
 
 		/*Create menu item in WP admin*/
 		public function add_menu(){

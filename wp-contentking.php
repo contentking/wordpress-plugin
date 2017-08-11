@@ -6,7 +6,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         1.4.0
+ * Version:         1.4.1
  *
  * @package         contentking-plugin
  */
@@ -85,6 +85,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 		public function instantiate_async(){
 			$async_save_post 	= new ContentkingSavePost(WP_Async_Task::LOGGED_IN);
 			$async_trash_post = new ContentkingTrashPost(WP_Async_Task::LOGGED_IN);
+			$async_contentking_updated_sitemap = new ContentkingChangeSitemap(WP_Async_Task::LOGGED_IN);
 		}
 
 		/*

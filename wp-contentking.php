@@ -177,15 +177,15 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 
 		/**
-     * Sanitize token on save
-     */
-    public function sanitization_token( $option ) {
+	     * Sanitize token on save
+	     */
+	    public function sanitization_token( $option ) {
 
-    	$option = sanitize_text_field( $option );
+	    	$option = sanitize_text_field( $option );
 
-      return $option;
+	      return $option;
 
-    }
+	    }
 
 		public function contentking_setting_callback_function() {}
 
@@ -210,8 +210,14 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 		}
 
-
-		public function after_upgrade_tasks($upgrader, $hook_extra) {
+		/*
+		* Check token after there was any upgrade of ContentKing plugin or WordPress
+		* 
+		* @param WP_Upgrader $upgrader WP_Upgrader instance
+		* @param array $hook_extra Array with information on upgrade being performed
+		* @return void
+		*/
+		public function after_upgrade_tasks( $upgrader, $hook_extra ) {
 			
 			if ( ( ( $hook_extra['type'] === 'plugin') && in_array( plugin_basename( __FILE__ ), $hook_extra['package'] ) ) || ( $hook_extra['type'] === 'core' ) ) :
 

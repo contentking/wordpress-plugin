@@ -8,6 +8,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	* Performs api call to validate token.
 	*
 	* @param string $token API secret token to be validated.
+	* @param string $event WordPress event (activation, deactivation, uninstallation) or token validation.
 	* @return Bool
 	*/
 	public function check_token( $token = '', $event = 'validation' ){

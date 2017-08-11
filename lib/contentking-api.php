@@ -10,7 +10,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	* @param string $token API secret token to be validated.
 	* @return Bool
 	*/
-	public function check_token( $token = '' ){
+	public function check_token( $token = '', $event = 'validation' ){
 		
 		global $wp_version;
 
@@ -18,7 +18,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 			$token = get_option( 'contentking_client_token' );
 		endif;
 
-		$data = $this->prepare_request_data( ['token' => $token, 'wp_version' => $wp_version] );
+		$data = $this->prepare_request_data( ['token' => $token, 'wp_version' => $wp_version, 'event' => $event] );
 		$response = wp_remote_post( $this->api_url . 'check_token', $data );
 		if ( is_wp_error( $response ) ):
 			return false;
@@ -86,9 +86,16 @@ class ContentkingAPI implements ContentkingAPIInterface {
 		if( isset( $data['url'] ) ):
 			$prepared_data['body'] = json_encode(['url' => $data['url']]);
 		endif;
+		if( isset( $data['token'] ) ):
 
-		if( isset( $data['wp_version'] ) ):
-			$prepared_data['body'] = json_encode(['wp_version' => $data['wp_version']]);
+			if( isset( $data['wp_version'] ) ):
+				$prepared_data['body'] = json_encode(['wp_version' => $data['wp_version']]);
+			endif;
+		
+			if( isset( $data['event'] ) ):
+				$prepared_data['body'] = json_encode(['event' => $data['event']]);
+			endif;
+
 		endif;
 
 		return $prepared_data;

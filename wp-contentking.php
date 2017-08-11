@@ -6,7 +6,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         1.2.0
+ * Version:         1.3.0
  *
  * @package         contentking-plugin
  */
@@ -60,7 +60,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 			add_action('plugins_loaded', array(&$this, 'instantiate_async'));
 			//Register for save_post action
 			add_action( 'wp_async_save_post', array( &$this, 'send_to_api' ) );
-			//Register for save_post action
+			//Register for wp_trash_post action
 			add_action( 'wp_async_wp_trash_post', array( &$this, 'send_to_api' ) );
 			//Register for client token updates
 			add_action( 'update_option_contentking_client_token', array( &$this, 'check_new_token' ) );
@@ -69,7 +69,8 @@ if( !class_exists( 'WP_Contentking' ) ){
 			//Get post id from URL
 			add_action( 'template_redirect', array( &$this,'get_post_id_from_url' )  );
 			//Send WP version after upgrading
-			add_action( 'upgrader_process_complete', array( &$this,'after_upgrade_tasks' ), 90, 2 ); 
+			add_action( 'upgrader_process_complete', array( &$this,'after_upgrade_tasks' ), 90, 2 );
+			
 
 		} // END public function __construct
 
@@ -120,7 +121,8 @@ if( !class_exists( 'WP_Contentking' ) ){
 				if( get_option('contentking_client_token') !== false ):
 
 					$api = new ContentkingAPI();
-					if( $api->check_token( ) === true):
+					$token = get_option( 'contentking_client_token' );
+					if( $api->check_token( $token, 'validation' ) === true):
 						update_option('contentking_status_flag', '1');
 					else:
 						update_option('contentking_status_flag', '0');
@@ -137,7 +139,9 @@ if( !class_exists( 'WP_Contentking' ) ){
 		*/
 		public static function deactivate(){
 
-			//nothing to do
+			$api = new ContentkingAPI();
+			$token = get_option( 'contentking_client_token' );
+			$api->check_token( $token, 'deactivation' );
 
 		} // END public static function deactivate()
 
@@ -198,7 +202,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 			//sending request to Contentking API
 			$api = new ContentkingAPI();
 
-			if( $api->check_token( $value ) === true ):
+			if( $api->check_token( $value, 'validation' ) === true ):
 				update_option( 'contentking_status_flag', '1' );
 			else:
 				update_option( 'contentking_status_flag', '0' );
@@ -209,17 +213,19 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 		public function after_upgrade_tasks($upgrader, $hook_extra) {
 			
-			if ( ( $hook_extra['type'] === 'plugin') || ( $hook_extra['type'] === 'core' ) ) :
+			if ( ( ( $hook_extra['type'] === 'plugin') && in_array( plugin_basename( __FILE__ ), $hook_extra['package'] ) ) || ( $hook_extra['type'] === 'core' ) ) :
 
 				$api = new ContentkingAPI();
-
-				if( $api->check_token() === true ):
+				$token = get_option( 'contentking_client_token' );
+					
+				if( $api->check_token( $token, 'update' ) === true ):
 					update_option( 'contentking_status_flag', '1' );
 				else:
 					update_option( 'contentking_status_flag', '0' );
 				endif;
-
-			endif;
+				
+			endif;	
+		
 		} 
 
 		/*Create menu item in WP admin*/
@@ -241,11 +247,12 @@ if( !class_exists( 'WP_Contentking' ) ){
    			if( isset( $_POST['validate_contentking_token'] ) && $_POST['validate_contentking_token'] === '1' ):
 					//Attempt to validate token
 					$api = new ContentkingAPI();
-
-					if( $api->check_token() === true):
-						update_option('contentking_status_flag', '1');
+					$token = get_option( 'contentking_client_token' );
+					
+					if( $api->check_token( $token, 'validation' ) === true ):
+						update_option( 'contentking_status_flag', '1' );
 					else:
-						update_option('contentking_status_flag', '0');
+						update_option( 'contentking_status_flag', '0' );
 					endif;
 
 				endif;

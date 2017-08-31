@@ -2,7 +2,7 @@
 
 interface ContentkingAPIInterface{
 
-  public function update_status( $token, $metod );
+  public function update_status( $token, $method );
   public function check_url( $url );
 
 }

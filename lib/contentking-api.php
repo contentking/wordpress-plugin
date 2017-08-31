@@ -62,10 +62,10 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	* Prepare HTTP request data for API call
 	*
 	* @param array $data input data.
-	* @param string $metod name of request.
+	* @param string $method name of request.
 	* @return Array HTTP request data.
 	*/
-	private function prepare_request_data( $data = [], $metod ){
+	private function prepare_request_data( $data = [], $method ){
 
 		if( empty($data) )
 			return [];
@@ -84,7 +84,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 			]
 		];
 
-		if ( $metod  === 'check_url' ):
+		if ( $method  === 'check_url' ):
 
 			$prepared_data['body'] = json_encode([]);
 			if( isset( $data['url'] ) ):
@@ -95,7 +95,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 			return $prepared_data;
 
 
-		elseif ( $metod === 'update_status' ):
+		elseif ( $method === 'update_status' ):
 
 			$prepared_data['body'] = json_encode([]);
 

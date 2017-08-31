@@ -27,6 +27,8 @@ require_once CKP_ROOT_DIR . '/lib/contentking-trash-post.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-sitemap-change.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-api-interface.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-api.php';
+require_once CKP_ROOT_DIR . '/lib/contentking-helper-interface.php';
+require_once CKP_ROOT_DIR . '/lib/contentking-helper.php';
 
 
 if( !class_exists( 'WP_Contentking' ) ){

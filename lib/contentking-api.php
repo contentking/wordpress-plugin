@@ -32,6 +32,17 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	}
 
 	/*
+	* Prepare api call to update status.
+	*
+	* @param bool $status plugin status (false - deactivated, true - activated)
+	* @return Bool
+	*/
+	public function update_status( $status ) {
+
+	}
+
+
+	/*
 	* Performs api call to send URL to Contentking.
 	*
 	* @param string $url URL to be sent to Contentking.

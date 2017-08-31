@@ -5,22 +5,20 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	protected $api_url = 'https://api.contentkingapp.com/v1/';
 
 	/*
-	* Performs api call to validate token.
+	* Prepare api call to update status.
 	*
 	* @param string $token API secret token to be validated.
-	* @param string $event WordPress event (activation, deactivation, uninstallation) or token validation.
+	* @param bool $status plugin status (false - deactivated, true - activated)
 	* @return Bool
 	*/
-	public function check_token( $token = '', $event = 'validation' ){
-		
-		global $wp_version;
+	public function update_status( $token = '', $status ) {
 
 		if( $token === '' ):
 			$token = get_option( 'contentking_client_token' );
 		endif;
 
-		$data = $this->prepare_request_data( ['token' => $token, 'wp_version' => $wp_version, 'event' => $event] );
-		$response = wp_remote_post( $this->api_url . 'check_token', $data );
+		$data = $this->prepare_request_data( ['token' => $token, 'status' => $status], 'update_status' );
+		$response = wp_remote_post( $this->api_url . 'update_status', $data );
 		if ( is_wp_error( $response ) ):
 			return false;
 
@@ -29,16 +27,6 @@ class ContentkingAPI implements ContentkingAPIInterface {
 		endif;
 
 		return false;
-	}
-
-	/*
-	* Prepare api call to update status.
-	*
-	* @param bool $status plugin status (false - deactivated, true - activated)
-	* @return Bool
-	*/
-	public function update_status( $status ) {
-
 	}
 
 
@@ -50,7 +38,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	*/
 	public function check_url( $url = '' ){
 
-		$data = $this->prepare_request_data( ['url'=> $url] );
+		$data = $this->prepare_request_data( ['url'=> $url], 'check_url' );
 		$response = wp_remote_post( $this->api_url . 'check_url', $data );
 	
 		if ( !is_wp_error( $response ) ):
@@ -74,9 +62,10 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	* Prepare HTTP request data for API call
 	*
 	* @param array $data input data.
+	* @param string $method name of request.
 	* @return Array HTTP request data.
 	*/
-	private function prepare_request_data( $data = [] ){
+	private function prepare_request_data( $data = [], $method ){
 
 		if( empty($data) )
 			return [];
@@ -94,23 +83,38 @@ class ContentkingAPI implements ContentkingAPIInterface {
 				'Authorization' => 'token ' . $token
 			]
 		];
-		$prepared_data['body'] = json_encode([]);
-		if( isset( $data['url'] ) ):
-			$prepared_data['body'] = json_encode(['url' => $data['url']]);
-		endif;
-		if( isset( $data['token'] ) ):
 
-			if( isset( $data['wp_version'] ) ):
-				$prepared_data['body'] = json_encode(['wp_version' => $data['wp_version']]);
+		if ( $method  === 'check_url' ):
+
+			$prepared_data['body'] = json_encode([]);
+			if( isset( $data['url'] ) ):
+				$prepared_data['body'] = json_encode(['url' => $data['url']]);
 			endif;
-		
-			if( isset( $data['event'] ) ):
-				$prepared_data['body'] = json_encode(['event' => $data['event']]);
-			endif;
+			
 
+			return $prepared_data;
+
+
+		elseif ( $method === 'update_status' ):
+
+			$prepared_data['body'] = json_encode([]);
+
+			$prepared_data['body'] = json_encode(['status' => $data['status']]);
+
+			$prepared_data['body'] = json_encode(['type' => 'wordpress']);
+
+			$helper = new ContentkingHelper();
+			$websites = $helper->get_websites();
+			$features = $helper->get_features();
+
+			$prepared_data['body'] = json_encode(['websites' => $websites]);
+
+			$prepared_data['body'] = json_encode(['features' => $features]);
+
+			return $prepared_data;
+			
 		endif;
 
-		return $prepared_data;
 
 	}
 

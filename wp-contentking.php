@@ -130,7 +130,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 					$api = new ContentkingAPI();
 					$token = get_option( 'contentking_client_token' );
-					if( $api->check_token( $token, 'validation' ) === true):
+					if( $api->update_status( $token, true ) === true):
 						update_option('contentking_status_flag', '1');
 					else:
 						update_option('contentking_status_flag', '0');
@@ -149,7 +149,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 			$api = new ContentkingAPI();
 			$token = get_option( 'contentking_client_token' );
-			$api->check_token( $token, 'deactivation' );
+			$api->update_status( $token, false );
 
 		} // END public static function deactivate()
 
@@ -210,7 +210,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 			//sending request to Contentking API
 			$api = new ContentkingAPI();
 
-			if( $api->check_token( $value, 'validation' ) === true ):
+			if( $api->update_status( $value, true ) === true ):
 				update_option( 'contentking_status_flag', '1' );
 			else:
 				update_option( 'contentking_status_flag', '0' );
@@ -232,7 +232,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 				$api = new ContentkingAPI();
 				$token = get_option( 'contentking_client_token' );
 					
-				if( $api->check_token( $token, 'update' ) === true ):
+				if( $api->update_status( $token, true ) === true ):
 					update_option( 'contentking_status_flag', '1' );
 				else:
 					update_option( 'contentking_status_flag', '0' );
@@ -273,7 +273,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 					$api = new ContentkingAPI();
 					$token = get_option( 'contentking_client_token' );
 					
-					if( $api->check_token( $token, 'validation' ) === true ):
+					if( $api->update_status( $token, true ) === true ):
 						update_option( 'contentking_status_flag', '1' );
 					else:
 						update_option( 'contentking_status_flag', '0' );

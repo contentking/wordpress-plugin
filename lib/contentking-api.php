@@ -40,7 +40,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 
 		$data = $this->prepare_request_data( ['url'=> $url], 'check_url' );
 		$response = wp_remote_post( $this->api_url . 'check_url', $data );
-	
+
 		if ( !is_wp_error( $response ) ):
 			if( isset( $response['response']['code'] ) ):
 				if(intval( $response['response']['code'] ) === 200):
@@ -65,7 +65,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	* @param string $method name of request.
 	* @return Array HTTP request data.
 	*/
-	private function prepare_request_data( $data = [], $method ){
+	public function prepare_request_data( $data = [], $method ){
 
 		if( empty($data) )
 			return [];
@@ -90,32 +90,18 @@ class ContentkingAPI implements ContentkingAPIInterface {
 			if( isset( $data['url'] ) ):
 				$prepared_data['body'] = json_encode(['url' => $data['url']]);
 			endif;
-			
-
-			return $prepared_data;
-
 
 		elseif ( $method === 'update_status' ):
-
-			$prepared_data['body'] = json_encode([]);
-
-			$prepared_data['body'] = json_encode(['status' => $data['status']]);
-
-			$prepared_data['body'] = json_encode(['type' => 'wordpress']);
-
+			$body_data = [];
+			$body_data['status'] = $data['status'];
+			$body_data['type'] = 'wordpress';
 			$helper = new ContentkingHelper();
-			$websites = $helper->get_websites();
-			$features = $helper->get_features();
-
-			$prepared_data['body'] = json_encode(['websites' => $websites]);
-
-			$prepared_data['body'] = json_encode(['features' => $features]);
-
-			return $prepared_data;
-			
+			$body_data['websites'] = $helper->get_websites();
+			$body_data['features']  = $helper->get_features();
+			$prepared_data['body'] = json_encode($body_data);
 		endif;
 
-
+		return $prepared_data;
 	}
 
 

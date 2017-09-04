@@ -9,6 +9,7 @@ class ContentkingHelper implements ContentkingHelperInterface {
 	*/
 	public function get_websites(){
 		$urls = [];
+		global $sitepress;
 		//is_wpml
 		if ( function_exists('icl_object_id') ):
      //is wmpl multidomain?
@@ -17,12 +18,14 @@ class ContentkingHelper implements ContentkingHelperInterface {
 			 foreach( $langs as $lang ):
 				 array_push( $urls, $lang['url'] );
 			 endforeach;
+			 return $urls;
 		 endif;
-	 	else:
-		   array_push( $urls, get_site_url() );
 	 	endif;
 
+		array_push( $urls, get_site_url() );
+
 		return $urls;
+
 	}
 
 	/*

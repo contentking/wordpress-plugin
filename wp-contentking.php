@@ -77,7 +77,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 			add_action( 'upgrader_process_complete', array( &$this,'after_upgrade_tasks' ), 90, 2 );
 			//Define new action for XML sitemap
 			add_action( 'admin_init', array( &$this, 'define_action_contentking_updated_sitemap' ) );
-			
+
 
 		} // END public function __construct
 
@@ -220,27 +220,27 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 		/*
 		* Check token after there was any upgrade of ContentKing plugin or WordPress
-		* 
+		*
 		* @param WP_Upgrader $upgrader WP_Upgrader instance
 		* @param array $hook_extra Array with information on upgrade being performed
 		* @return void
 		*/
 		public function after_upgrade_tasks( $upgrader, $hook_extra ) {
-			
+
 			if ( ( ( $hook_extra['type'] === 'plugin') && in_array( plugin_basename( __FILE__ ), $hook_extra['package'] ) ) || ( $hook_extra['type'] === 'core' ) ) :
 
 				$api = new ContentkingAPI();
 				$token = get_option( 'contentking_client_token' );
-					
+
 				if( $api->update_status( $token, true ) === true ):
 					update_option( 'contentking_status_flag', '1' );
 				else:
 					update_option( 'contentking_status_flag', '0' );
 				endif;
-				
-			endif;	
-		
-		} 
+
+			endif;
+
+		}
 
 		/*Define action for update XML sitemap*/
 		public function define_action_contentking_updated_sitemap() {
@@ -248,7 +248,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 			if ( isset( $_POST['wpseo_xml'] ) ):
 
 				do_action( 'contentking_updated_sitemap');
-			
+
 			endif;
 		}
 
@@ -272,7 +272,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 					//Attempt to validate token
 					$api = new ContentkingAPI();
 					$token = get_option( 'contentking_client_token' );
-					
+
 					if( $api->update_status( $token, true ) === true ):
 						update_option( 'contentking_status_flag', '1' );
 					else:
@@ -388,12 +388,12 @@ if( !class_exists( 'WP_Contentking' ) ){
 						$post_id = json_decode( $response['body'] );
 
 						if( $post_id > 0 ):
-							return json_encode( admin_url( 'post.php' ) . "?post=$post_id&action=edit" );
+							return admin_url( 'post.php' ) . "?post=$post_id&action=edit";
 						endif;
 
 					endif;
 
-					return json_encode( false );
+					return false;
 
 				endif;
 			endif;

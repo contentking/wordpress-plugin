@@ -13,6 +13,7 @@ Plugin requires PHP version >= 5.5.
 
 == Changelog ==
 
+= 1.5.0 = Update status support.
 = 1.4.0 = Send Yoast XML sitemap on change.
 = 1.3.0 = Send events along with check token request.
 = 1.2.0 = Send WP version on upgrade is added.

@@ -6,7 +6,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         1.4.1
+ * Version:         1.5.0
  *
  * @package         contentking-plugin
  */
@@ -27,6 +27,8 @@ require_once CKP_ROOT_DIR . '/lib/contentking-trash-post.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-sitemap-change.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-api-interface.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-api.php';
+require_once CKP_ROOT_DIR . '/lib/contentking-helper-interface.php';
+require_once CKP_ROOT_DIR . '/lib/contentking-helper.php';
 
 
 if( !class_exists( 'WP_Contentking' ) ){
@@ -75,7 +77,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 			add_action( 'upgrader_process_complete', array( &$this,'after_upgrade_tasks' ), 90, 2 );
 			//Define new action for XML sitemap
 			add_action( 'admin_init', array( &$this, 'define_action_contentking_updated_sitemap' ) );
-			
+
 
 		} // END public function __construct
 
@@ -128,7 +130,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 					$api = new ContentkingAPI();
 					$token = get_option( 'contentking_client_token' );
-					if( $api->check_token( $token, 'validation' ) === true):
+					if( $api->update_status( $token, true ) === true):
 						update_option('contentking_status_flag', '1');
 					else:
 						update_option('contentking_status_flag', '0');
@@ -147,7 +149,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 			$api = new ContentkingAPI();
 			$token = get_option( 'contentking_client_token' );
-			$api->check_token( $token, 'deactivation' );
+			$api->update_status( $token, false );
 
 		} // END public static function deactivate()
 
@@ -208,7 +210,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 			//sending request to Contentking API
 			$api = new ContentkingAPI();
 
-			if( $api->check_token( $value, 'validation' ) === true ):
+			if( $api->update_status( $value, true ) === true ):
 				update_option( 'contentking_status_flag', '1' );
 			else:
 				update_option( 'contentking_status_flag', '0' );
@@ -218,27 +220,27 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 		/*
 		* Check token after there was any upgrade of ContentKing plugin or WordPress
-		* 
+		*
 		* @param WP_Upgrader $upgrader WP_Upgrader instance
 		* @param array $hook_extra Array with information on upgrade being performed
 		* @return void
 		*/
 		public function after_upgrade_tasks( $upgrader, $hook_extra ) {
-			
+
 			if ( ( ( $hook_extra['type'] === 'plugin') && in_array( plugin_basename( __FILE__ ), $hook_extra['package'] ) ) || ( $hook_extra['type'] === 'core' ) ) :
 
 				$api = new ContentkingAPI();
 				$token = get_option( 'contentking_client_token' );
-					
-				if( $api->check_token( $token, 'update' ) === true ):
+
+				if( $api->update_status( $token, true ) === true ):
 					update_option( 'contentking_status_flag', '1' );
 				else:
 					update_option( 'contentking_status_flag', '0' );
 				endif;
-				
-			endif;	
-		
-		} 
+
+			endif;
+
+		}
 
 		/*Define action for update XML sitemap*/
 		public function define_action_contentking_updated_sitemap() {
@@ -246,7 +248,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 			if ( isset( $_POST['wpseo_xml'] ) ):
 
 				do_action( 'contentking_updated_sitemap');
-			
+
 			endif;
 		}
 
@@ -270,8 +272,8 @@ if( !class_exists( 'WP_Contentking' ) ){
 					//Attempt to validate token
 					$api = new ContentkingAPI();
 					$token = get_option( 'contentking_client_token' );
-					
-					if( $api->check_token( $token, 'validation' ) === true ):
+
+					if( $api->update_status( $token, true ) === true ):
 						update_option( 'contentking_status_flag', '1' );
 					else:
 						update_option( 'contentking_status_flag', '0' );
@@ -386,12 +388,12 @@ if( !class_exists( 'WP_Contentking' ) ){
 						$post_id = json_decode( $response['body'] );
 
 						if( $post_id > 0 ):
-							return json_encode( admin_url( 'post.php' ) . "?post=$post_id&action=edit" );
+							return admin_url( 'post.php' ) . "?post=$post_id&action=edit";
 						endif;
 
 					endif;
 
-					return json_encode( false );
+					return false;
 
 				endif;
 			endif;

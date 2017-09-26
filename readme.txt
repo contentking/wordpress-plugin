@@ -12,6 +12,7 @@ Real-time SEO auditing and content tracking for your website.
 Plugin requires PHP version >= 5.5.
 
 == Changelog ==
+= 1.5.2 = Token validation update.
 = 1.5.1 = Update SVN.
 = 1.5.0 = Update status support.
 = 1.4.0 = Send Yoast XML sitemap on change.

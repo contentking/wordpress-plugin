@@ -6,7 +6,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         1.5.1
+ * Version:         1.5.2
  *
  * @package         contentking-plugin
  */
@@ -200,12 +200,10 @@ if( !class_exists( 'WP_Contentking' ) ){
 			/*
 			* Performs api call to check API token on save.
 			*
-			* @param string $old_value Old token value
-			* @param string $new_value New token value
-			* @param string $option  Option name
+			* @param string $value New token value
 			* @return Bool
 			*/
-		public function check_new_token( $old_value, $value, $option ) {
+		public function check_new_token( $value ) {
 
 			//sending request to Contentking API
 			$api = new ContentkingAPI();

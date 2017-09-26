@@ -29,7 +29,8 @@ require_once CKP_ROOT_DIR . '/lib/contentking-api-interface.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-api.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-helper-interface.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-helper.php';
-
+require_once CKP_ROOT_DIR . '/lib/loggerInterface.php';
+require_once CKP_ROOT_DIR . '/lib/loggerFile.php';
 
 if( !class_exists( 'WP_Contentking' ) ){
 
@@ -68,7 +69,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 			//Register for wp_trash_post action
 			add_action( 'wp_async_wp_trash_post', array( &$this, 'send_to_api' ) );
 			//Register for client token updates
-			add_action( 'update_option_contentking_client_token', array( &$this, 'check_new_token' ) );
+			add_action( 'update_option_contentking_client_token', array( &$this, 'check_new_token' ), 10, 3 );
 			//Create REST API endpoint
 			add_action( 'rest_api_init', array( &$this,'rest_admin_edit_url' ) );
 			//Get post id from URL
@@ -200,15 +201,16 @@ if( !class_exists( 'WP_Contentking' ) ){
 			/*
 			* Performs api call to check API token on save.
 			*
-			* @param string $value New token value
-			* @return Bool
+			* @param mixed  $old_value The old option value.
+			* @param mixed  $new_value The new option value.
+			* @param string $option    Option name.
+			* @return void
 			*/
-		public function check_new_token( $value ) {
+		public function check_new_token( $old_value, $new_value, $option ) {
 
 			//sending request to Contentking API
 			$api = new ContentkingAPI();
-
-			if( $api->update_status( $value, true ) === true ):
+			if( $api->update_status( $new_value, true ) === true ):
 				update_option( 'contentking_status_flag', '1' );
 			else:
 				update_option( 'contentking_status_flag', '0' );

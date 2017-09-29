@@ -13,7 +13,7 @@ class ContentkingHelper implements ContentkingHelperInterface {
 		//is_wpml
 		if ( function_exists('icl_object_id') ):
      //is wmpl multidomain?
-		 if( $sitepress->get_setting('language_negotiation_type', false) === 2 ):
+		 if( $sitepress->get_setting('language_negotiation_type', false) === '2' ):
 			 $langs = icl_get_languages();
 			 foreach( $langs as $lang ):
 				 array_push( $urls, $lang['url'] );

@@ -6,7 +6,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         1.5.4
+ * Version:         1.5.5
  *
  * @package         contentking-plugin
  */
@@ -209,7 +209,7 @@ if( !class_exists( 'WP_Contentking' ) ){
 
 			//sending request to Contentking API
 			$api = new ContentkingAPI();
-			if( $api->update_status( $new_value, true ) === true ):
+			if( $api->update_status( $value, true ) === true ):
 				update_option( 'contentking_status_flag', '1' );
 			else:
 				update_option( 'contentking_status_flag', '0' );

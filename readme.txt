@@ -12,6 +12,7 @@ Real-time SEO auditing and content tracking for your website.
 Plugin requires PHP version >= 5.5.
 
 == Changelog ==
+= 1.5.5 = New token fix.
 = 1.5.4 = Fix sending domains on WPML multidomain instance.
 = 1.5.3 = Validate token on first save fixed.
 = 1.5.2 = Token validation update.

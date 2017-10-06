@@ -1,0 +1,14 @@
+machine:
+    php:
+        version: 7.0.24
+
+dependencies:
+    override:
+        - composer install --prefer-source --no-interaction
+        - composer install -d ./app/
+
+test:
+    pre:
+    override:
+        - composer phpcs
+        - composer phpstan

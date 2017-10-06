@@ -1,7 +1,4 @@
 .idea/*
-composer.lock
+app/composer.lock
+app/vendor/*
 vendor/*
-composer.phar
-log.txt
-compat.phar
-phpcompatinfo.json

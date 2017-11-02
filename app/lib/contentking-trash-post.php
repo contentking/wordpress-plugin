@@ -28,7 +28,7 @@ class ContentkingTrashPost extends WP_Async_Task{
 	*
 	* @param array $data Params from hook
 	*
-	* @return array
+	* @return array|NULL
 	*/
 	protected function prepare_data($data){
 

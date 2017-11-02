@@ -6,7 +6,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         1.5.5
+ * Version:         1.5.6
  *
  * @package         contentking-plugin
  */
@@ -306,8 +306,8 @@ if( !class_exists( 'WP_Contentking' ) ){
 		/*Notification area */
 		public function notification_button( $wp_admin_bar ){
 
-			if( !current_user_can( 'manage_options' ) ):
-				wp_die( __( 'You do not have sufficient permissions to access this page.', 'contentking-plugin' ) );
+			if( !current_user_can( 'manage_options' ) ): //Don't show contentking in admin bar
+				return;
 			endif;
 
 			if ($wp_admin_bar === null)

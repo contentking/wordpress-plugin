@@ -67,8 +67,8 @@ class ContentkingTrashPost extends WP_Async_Task {
 	 */
 	protected function run_action() {
 
-		if ( isset( $_POST['urls'] ) ) :
-			do_action( "wp_async_$this->action", $_POST['urls'] );
+		if ( isset( $_POST['urls'] ) ) :// WPCS: input var ok, CSRF ok.
+			do_action( "wp_async_$this->action", $_POST['urls'] );// WPCS: input var ok, sanitization ok, CSRF ok.
 		endif;
 
 	}

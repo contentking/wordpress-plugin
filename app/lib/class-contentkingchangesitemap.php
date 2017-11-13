@@ -58,8 +58,8 @@ class ContentkingChangeSitemap extends WP_Async_Task {
 	 */
 	protected function run_action() {
 
-		if ( isset( $_POST['wpseo_xml'] ) ) :
-			do_action( "wp_async_$this->action", $_POST['wpseo_xml'] );
+		if ( isset( $_POST['wpseo_xml'] ) ) : // WPCS: input var ok, CSRF ok.
+			do_action( "wp_async_$this->action", $_POST['wpseo_xml'] );// WPCS: input var ok, sanitization ok CSRF ok.
 		endif;
 
 	}

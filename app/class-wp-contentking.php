@@ -28,7 +28,7 @@ require_once CKP_ROOT_DIR . '/lib/class-contentkingapi.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-helper-interface.php';
 require_once CKP_ROOT_DIR . '/lib/class-contentkinghelper.php';
 
-if ( ! class_exists( 'WP_Contentking' ) ) {
+if ( ! class_exists( 'WP_Contentking' ) ) :
 
 	/**
 	 * Main plugin class
@@ -162,7 +162,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) {
 
 			if ( version_compare( phpversion(), '5.5.0', '<' ) ) :
 				deactivate_plugins( plugin_basename( __FILE__ ) );
-				wp_die( 'This plugin requires PHP Version 5.5. Your current version is ' . phpversion() );
+				wp_die( esc_html( 'This plugin requires PHP Version 5.5. Your current version is ' . phpversion() ) );
 			endif;
 
 			// Register settings.
@@ -270,7 +270,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) {
 		 */
 		public function define_action_contentking_updated_sitemap() {
 
-			if ( isset( $_POST['wpseo_xml'] ) ) :
+			if ( isset( $_POST['wpseo_xml'] ) ) :// WPCS: input var ok, CSRF ok.
 
 				do_action( 'contentking_updated_sitemap' );
 
@@ -293,11 +293,11 @@ if ( ! class_exists( 'WP_Contentking' ) ) {
 		public function view_plugin_screen() {
 
 			if ( ! current_user_can( 'manage_options' ) ) :
-				wp_die( __( 'You do not have sufficient permissions to access this page.', 'contentking-plugin' ) );
+				wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'contentking-plugin' ) );
 			endif;
 			// if this fails, check_admin_referer() will automatically print a "failed" page and die.
-			if ( ! empty( $_POST ) && check_admin_referer( 'contentking_validate_token', 'ck_validate_token' ) ) {
-				if ( isset( $_POST['validate_contentking_token'] ) && '1' === $_POST['validate_contentking_token'] ) :
+			if ( ! empty( $_POST ) && check_admin_referer( 'contentking_validate_token', 'ck_validate_token' ) ) {// WPCS: input var ok.
+				if ( isset( $_POST['validate_contentking_token'] ) && '1' === $_POST['validate_contentking_token'] ) :// WPCS: input var ok.
 					// Attempt to validate token.
 					$api = new ContentkingAPI();
 					$token = get_option( 'contentking_client_token' );
@@ -369,7 +369,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) {
 		 */
 		public function get_post_id_from_url() {
 
-			if ( ! empty( $_POST ) && isset( $_POST['ck_get_url'] ) ) :
+			if ( ! empty( $_POST ) && isset( $_POST['ck_get_url'] ) ) :// WPCS: input var ok, CSRF ok.
 				if ( is_single() || is_page() ) :
 					global $post;
 					echo wp_json_encode( $post->ID );
@@ -455,7 +455,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) {
 		 */
 		public function register_icon_styles( $hook ) {
 
-			if ( 'settings_page_contentking' != $hook ) {
+			if ( 'settings_page_contentking' !== $hook ) {
 				return;
 			}
 
@@ -468,11 +468,11 @@ if ( ! class_exists( 'WP_Contentking' ) ) {
 
 	}//end class
 
-}// END if( !class_exists( 'WP_Contentking' ) ){.
+endif;
 
-if ( class_exists( 'WP_Contentking' ) ) {
+if ( class_exists( 'WP_Contentking' ) ) :
 
 	// instantiate the plugin class.
 	$wp_contentking = new WP_Contentking();
 
-} // END if( class_exists( 'WP_Contentking' ) ){.
+endif;

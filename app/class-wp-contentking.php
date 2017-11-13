@@ -22,13 +22,13 @@ define( 'CKP_ROOT_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
 
 // Include libraries
 require_once CKP_ROOT_DIR . '/vendor/autoload.php';
-require_once CKP_ROOT_DIR . '/lib/contentking-save-post.php';
-require_once CKP_ROOT_DIR . '/lib/contentking-trash-post.php';
-require_once CKP_ROOT_DIR . '/lib/contentking-sitemap-change.php';
+require_once CKP_ROOT_DIR . '/lib/class-contentkingsavepost.php';
+require_once CKP_ROOT_DIR . '/lib/class-contentkingtrashpost.php';
+require_once CKP_ROOT_DIR . '/lib/class-contentkingchangesitemap.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-api-interface.php';
-require_once CKP_ROOT_DIR . '/lib/contentking-api.php';
+require_once CKP_ROOT_DIR . '/lib/class-contentkingapi.php';
 require_once CKP_ROOT_DIR . '/lib/contentking-helper-interface.php';
-require_once CKP_ROOT_DIR . '/lib/contentking-helper.php';
+require_once CKP_ROOT_DIR . '/lib/class-contentkinghelper.php';
 
 if ( ! class_exists( 'WP_Contentking' ) ) {
 

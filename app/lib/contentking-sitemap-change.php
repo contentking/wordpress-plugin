@@ -20,14 +20,14 @@ class ContentkingChangeSitemap extends WP_Async_Task{
 	*
 	* @param array $data Params from hook
 	*
-	* @return array
+	* @return array|NULL
 	*/
 	protected function prepare_data($data){
 
 		if ( class_exists( 'WPSEO_Sitemaps_Router' ) ):
 
 			$url = WPSEO_Sitemaps_Router::get_base_url( 'sitemap_index.xml' );
-					
+
 			return [
 				'wpseo_xml' => [$url],
 			];

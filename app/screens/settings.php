@@ -1,6 +1,11 @@
 <?php
+/**
+ * Plugin settings screen accesible via WP Admin.
+ *
+ * @package contentking-plugin
+ */
 
-defined( 'ABSPATH' ) or die( 'This file should not be accessed directly!' );
+defined( 'ABSPATH' ) || die( 'This file should not be accessed directly!' );
 
 if ( ! current_user_can( 'manage_options' ) ) :
 	wp_die( __( 'You do not have sufficient permissions to access this page.', 'contentking-plugin' ) );
@@ -24,7 +29,7 @@ endif;
 				<?php
 
 				$flag = get_option( 'contentking_status_flag' );
-				if ( $flag === '1' ) :
+				if ( '' === $flag ) :
 				?>
 
 					<i class = "icon-ok"> </i>

@@ -1,5 +1,19 @@
 <?php
+/**
+ * Sitemap-related actions.
+ *
+ * @file
+ * Handling sitemap actions.
+ * @package contentking-plugin
+ */
 
+ /**
+  * Class ContentkingChangeSitemap.
+  *
+  * @class
+  * Extends WordPress Async Task.
+  * @package contentking-plugin
+  */
 class ContentkingChangeSitemap extends WP_Async_Task {
 
 	/**
@@ -7,7 +21,7 @@ class ContentkingChangeSitemap extends WP_Async_Task {
 	 *
 	 * @var string
 	 */
-	protected $action = 'contentking_updated_sitemap'; // Action, which will react, if there're any changes with sitemap
+	protected $action = 'contentking_updated_sitemap'; // Action, which will react, if there're any changes with sitemap.
 	/**
 	 * Priority to fire intermediate action.
 	 *
@@ -18,7 +32,7 @@ class ContentkingChangeSitemap extends WP_Async_Task {
 	/**
 	 * Prepare POST data to send to session that processes the task
 	 *
-	 * @param array $data Params from hook
+	 * @param array $data Params from hook.
 	 *
 	 * @return array|NULL
 	 */

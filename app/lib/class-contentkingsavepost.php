@@ -1,5 +1,15 @@
 <?php
+/**
+ * Contentking Save Post event actions.
+ *
+ * @package contentking-plugin
+ */
 
+ /**
+  * Class ContentkingSavePost.
+  *
+  * @package contentking-plugin
+  */
 class ContentkingSavePost extends WP_Async_Task {
 
 	/**
@@ -7,7 +17,7 @@ class ContentkingSavePost extends WP_Async_Task {
 	 *
 	 * @var string
 	 */
-	protected $action = 'save_post'; // action triggered whenever a post (even custom) or page is created or updated, which could be from an import, post/page edit form, xmlrpc, or post by email
+	protected $action = 'save_post'; // action triggered whenever a post (even custom) or page is created or updated, which could be from an import, post/page edit form, xmlrpc, or post by email.
 
 	/**
 	 * Priority to fire intermediate action.
@@ -26,7 +36,7 @@ class ContentkingSavePost extends WP_Async_Task {
 	/**
 	 * Prepare POST data to send to session that processes the task
 	 *
-	 * @param array $data Params from hook
+	 * @param array $data Params from hook.
 	 *
 	 * @return array|NULL
 	 */
@@ -36,13 +46,13 @@ class ContentkingSavePost extends WP_Async_Task {
 			return null;
 		endif;
 
-		if ( $data[1]->post_status === 'publish' ) : // Post is published
+		if ( 'publish' === $data[1]->post_status ) : // Post is published.
 
 			$post_type_data = get_post_type_object( $data[1]->post_type );
-			if ( intval( $post_type_data->public ) === 1 || intval( $post_type_data->publicly_queryable ) === 1 ) : // Post has public URL
+			if ( intval( $post_type_data->public ) === 1 || intval( $post_type_data->publicly_queryable ) === 1 ) : // Post has public URL.
 				$url = get_permalink( $data[0] );
 				$fixed_url = str_replace( '__trashed', '', $url ); // Fix url in case parent page was thrashed recently.
-				array_push( $this->urls, $fixed_url ); // Only data from last call will be used in async task
+				array_push( $this->urls, $fixed_url ); // Only data from last call will be used in async task.
 
 				return [
 					'urls' => $this->urls,

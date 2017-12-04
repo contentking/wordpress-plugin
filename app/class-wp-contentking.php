@@ -15,8 +15,13 @@
 defined( 'ABSPATH' ) || die( 'This file should not be accessed directly!' );
 
 // Plugin constants.
-define( 'CKP_ROOT_DIR', str_replace( '\\', '/', dirname( __FILE__ ) ) );
-define( 'CKP_ROOT_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
+if ( ! defined( 'CKP_ROOT_DIR' ) ) {
+	define( 'CKP_ROOT_DIR', str_replace( '\\', '/', dirname( __FILE__ ) ) );
+}
+
+if ( ! defined( 'CKP_ROOT_URL' ) ) {
+	define( 'CKP_ROOT_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
+}
 
 // Include libraries.
 require_once CKP_ROOT_DIR . '/vendor/autoload.php';

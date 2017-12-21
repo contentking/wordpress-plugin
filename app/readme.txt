@@ -2,7 +2,7 @@
 Contributors: contentkingapp,buzzycat,samanta815
 Tags: contentking, seo monitoring
 Requires at least: 3.3
-Tested up to: 4.8
+Tested up to: 4.9
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,6 +12,7 @@ Real-time SEO auditing and content tracking for your website.
 Plugin requires PHP version >= 5.5.
 
 == Changelog ==
+= 1.5.7 = Prioritization token renamed.
 = 1.5.6 = Access rights in wp-admin fixed.
 = 1.5.5 = New token fix.
 = 1.5.4 = Fix sending domains on WPML multidomain instance.

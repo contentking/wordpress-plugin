@@ -29,7 +29,7 @@ endif;
 				<?php
 
 				$flag = get_option( 'contentking_status_flag' );
-				if ( '' === $flag ) :
+				if ( '1' === $flag ) :
 				?>
 
 					<i class = "icon-ok"> </i>

@@ -124,7 +124,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 		elseif ( 'update_status' === $method ) :
 			$body_data = [];
 			$body_data['status'] = $data['status'];
-			$body_data['type'] = 'WordPress';
+			$body_data['type'] = 'wordpress'; // WPCS: spelling ok.
 			$helper = new ContentkingHelper();
 			$body_data['websites'] = $helper->get_websites();
 			$body_data['features']  = $helper->get_features();

@@ -112,9 +112,9 @@ class ContentkingAPI implements ContentkingAPIInterface {
 
 		if ( 'check_url' === $method ) :
 
-			$prepared_data['body'] = wp_wp_json_encode( [] );
+			$prepared_data['body'] = wp_json_encode( [] );
 			if ( isset( $data['url'] ) ) :
-				$prepared_data['body'] = wp_wp_json_encode(
+				$prepared_data['body'] = wp_json_encode(
 					[
 						'url' => $data['url'],
 					]
@@ -128,7 +128,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 			$helper = new ContentkingHelper();
 			$body_data['websites'] = $helper->get_websites();
 			$body_data['features']  = $helper->get_features();
-			$prepared_data['body'] = wp_wp_json_encode( $body_data );
+			$prepared_data['body'] = wp_json_encode( $body_data );
 		endif;
 
 		return $prepared_data;

@@ -23,7 +23,7 @@ endif;
 
 	<table class = "contentking-setting">
 		<tr>
-			<th scope="row"> <?php echo esc_html__( 'Prioritization API token', 'contentking-plugin' ); ?> </th>
+			<th scope="row"> <?php echo esc_html__( 'CMS API token', 'contentking-plugin' ); ?> </th>
 			<td><input type="text" id="contentking_client_token" name="contentking_client_token" value="<?php echo esc_attr( $contentking_client_token ); ?>" />	</td>
 			<td>
 				<?php
@@ -57,7 +57,7 @@ if ( 5 < strlen( $contentking_client_token ) && '0' === $flag ) :
 	<input type="hidden" name="validate_contentking_token" value="1"/>
 	<input name="Validate" type="submit" class="button button-primary" value="<?php echo esc_attr__( 'Validate token', 'contentking-plugin' ); ?>" />
 	<p class="error">
-	<?php esc_html__( 'It looks like your Prioritization API token is not validated. Click to validate.','contentking-plugin' ); ?>
+	<?php esc_html__( 'It looks like your CMS API token is not validated. Click to validate.','contentking-plugin' ); ?>
 	</p>
 	</form>
 
@@ -83,14 +83,14 @@ if ( 5 < strlen( $contentking_client_token ) && '0' === $flag ) :
 	<li>
 	<?php
 	_e( // WPCS: XSS OK.
-		'Copy the <strong>Prioritization API token</strong> from the <strong>Integrations</strong> section.','contentking-plugin'
+		'Copy the <strong>CMS API</strong> token from the <strong>Integration tokens</strong> section.','contentking-plugin'
 	);
 			?>
 		 </li>
 	<li>
 	<?php
 	_e( // WPCS: XSS OK.
-		'Come back to this WordPress screen and paste the <strong>Prioritization API token</strong> into the <strong>Prioritization API token</strong> field.','contentking-plugin'
+		'Come back to this WordPress screen and paste it into the <strong>CMS API token</strong> field.','contentking-plugin'
 	);
 			?>
 		 </li>

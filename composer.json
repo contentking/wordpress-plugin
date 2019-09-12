@@ -4,6 +4,7 @@
 	},
 	"type": "project",
 	"require": {
+		"techcrunch/wp-async-task": "@dev"
 	},
 	"require-dev": {
 		"phpstan/phpstan": "^0.8",

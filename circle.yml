@@ -13,7 +13,7 @@ jobs:
             - restore_cache:
                 name: 'dependencies | restore cache'
                 keys:
-                    - dependencies-composer-{{ checksum "composer.lock" }}
+                    - dependencies-{{ checksum "composer.lock" }}
 
             - run:
                 name: 'dependencies | install composer'
@@ -21,22 +21,7 @@ jobs:
 
             - save_cache:
                 name: 'dependencies | save cache'
-                key: dependencies-composer-{{ checksum "composer.lock" }}
-                paths:
-                    - vendor
-
-            - restore_cache:
-                name: 'dependencies | WP plugin: restore cache'
-                keys:
-                    - dependencies-composer-{{ checksum "app/composer.lock" }}
-
-            - run:
-                name: 'dependencies | WP plugin: install composer'
-                command: 'cd app && composer install --prefer-source --no-interaction'
-
-            - save_cache:
-                name: 'dependencies | WP plugin: save cache'
-                key: dependencies-composer-{{ checksum "app/composer.lock" }}
+                key: dependencies-{{ checksum "composer.lock" }}
                 paths:
                     - app/vendor
 

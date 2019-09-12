@@ -1,9 +1,7 @@
 parameters:
-	bootstrap: %rootDir%/../../../bootstrap-phpstan.php
+	bootstrap: %rootDir%/../../../../bootstrap-phpstan.php
 	excludes_analyse:
-		- %rootDir%/../../../app/vendor/*
-	autoload_directories:
-		- %rootDir%/../../../app/
+		- %rootDir%/../../../../app/vendor/*
 	ignoreErrors:
 		- '#Call to static method get_base_url\(\) on an unknown class WPSEO_Sitemaps_Router.#'
 		- '#Constant DOING_AUTOSAVE not found.#'

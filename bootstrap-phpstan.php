@@ -12,4 +12,4 @@ function register_activation_hook($par1, $par2) {}
 function register_deactivation_hook($par1, $par2) {}
 
 require_once __DIR__ . '/app/vendor/autoload.php';
-require_once __DIR__ . '/app/class-wp-contentking.php';
+require_once __DIR__ . '/app/wp-contentking.php';

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<ruleset name="ContentKing" namespace="ContentKing">
+    <description>ContentKing WP plugin Coding Standards</description>
+
+    <autoload>./PHPCSAliases.php</autoload>
+
+    <rule ref="WordPress"/>
+
+    <rule ref="WordPress.Files.FileName">
+        <exclude-pattern>/app/wp-contentking.php</exclude-pattern>
+    </rule>
+</ruleset>

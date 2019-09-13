@@ -1,1 +1,0 @@
-app/class-wp-contentking.php

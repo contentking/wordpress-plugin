@@ -1,14 +1,40 @@
-machine:
-    php:
-        version: 7.0.24
+version: 2
 
-dependencies:
-    override:
-        - composer install --prefer-source --no-interaction
-        - composer install -d ./app/
+jobs:
+    test:
+        working_directory: ~/wp-plugin
 
-test:
-    pre:
-    override:
-        - composer phpcs
-        - composer phpstan
+        docker:
+            - image: circleci/php:7.0.33
+
+        steps:
+            - checkout
+
+            - restore_cache:
+                name: 'dependencies | restore cache'
+                keys:
+                    - dependencies-{{ checksum "composer.lock" }}
+
+            - run:
+                name: 'dependencies | install composer'
+                command: 'composer install --prefer-source --no-interaction'
+
+            - save_cache:
+                name: 'dependencies | save cache'
+                key: dependencies-{{ checksum "composer.lock" }}
+                paths:
+                    - app/vendor
+
+            - run:
+                name: 'tests | WP plugin: PHP Code Sniffer'
+                command: 'composer phpcs'
+
+            - run:
+                name: 'tests | WP plugin: PHPStan'
+                command: 'composer phpstan'
+
+workflows:
+    version: 2
+    build_and_test:
+        jobs:
+            - test

@@ -1,9 +1,0 @@
-{
-	"name": "contentking/wordpress-plugin",
-    	"description": "Connetion between Wordpress and Contentking",
-    	"require": {
-        	"techcrunch/wp-async-task": "@dev"
-          
-    	},
-	"license": "GPL"
-}

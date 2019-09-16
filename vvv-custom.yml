@@ -1,0 +1,394 @@
+---
+
+
+# This file is a YAML formatted file. YAML indenting is done in spaces not
+# tabs, and whitespace is significant. If you don't stick to this, it will
+# fail on provision
+
+#
+# IMPORTANT, if you change this file, you have to reprovision,  no exceptions
+# Do this by running either this command:
+# vagrant reload --provision
+#
+# Or, if your machine is already turned on:
+# vagrant provision
+#
+
+# These are your websites, and their names map on to the folders they're
+# located in. See the docs for how to define these, and what all the keys
+# and options are
+sites:
+
+  # latest version of WordPress, can be used for client work and testing
+  # Check the readme at https://github.com/Varying-Vagrant-Vagrants/custom-site-template
+
+  # WordPress 5.2
+  wordpress52-multisite-php73:
+    skip_provisioning: false
+    description: "MultiSite WordPress 5.2 running on PHP 7.3"
+    nginx_upstream: php73
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+        - contentking
+        - query-monitor
+      wp_type: subdomain
+      wp_version: 5.2
+    hosts:
+      - php73.wordpress52-multisite.test
+      - siteone.php73.wordpress52-multisite.test
+      - sitetwo.php73.wordpress52-multisite.test
+
+  wordpress52-php73:
+    skip_provisioning: false
+    description: "WordPress 5.2 running on PHP 7.3"
+    nginx_upstream: php73
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+        - contentking
+        - query-monitor
+      wp_type: single
+      wp_version: 5.2
+    hosts:
+      - php73.wordpress52.test
+
+  wordpress52-php72:
+    skip_provisioning: false
+    description: "WordPress 5.2 running on PHP 7.2"
+    nginx_upstream: php72
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+         - contentking
+         - query-monitor
+      wp_type: single
+      wp_version: 5.2
+    hosts:
+      - php72.wordpress52.test
+
+  wordpress52-php71:
+    skip_provisioning: false
+    description: "WordPress 5.2 running on PHP 7.1"
+    nginx_upstream: php71
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+         - contentking
+         - query-monitor
+      wp_type: single
+      wp_version: 5.2
+    hosts:
+      - php71.wordpress52.test
+
+  wordpress52-php70:
+    skip_provisioning: false
+    description: "WordPress 5.2 running on PHP 7.0"
+    nginx_upstream: php71
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+         - contentking
+         - query-monitor
+      wp_type: single
+      wp_version: 5.2
+    hosts:
+      - php70.wordpress52.test
+
+  wordpress52-php56:
+    skip_provisioning: false
+    description: "WordPress 5.2 running on PHP 5.6"
+    nginx_upstream: php56
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+         - contentking
+         - query-monitor
+      wp_type: single
+      wp_version: 5.2
+    hosts:
+      - php56.wordpress52.test
+
+  # Wordpress 5.1
+  wordpress51-php73:
+    skip_provisioning: false
+    description: "WordPress 5.1 running on PHP 7.3"
+    nginx_upstream: php73
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+        - contentking
+        - query-monitor
+      wp_type: single
+      wp_version: 5.1
+    hosts:
+      - php73.wordpress51.test
+
+  wordpress51-php72:
+    skip_provisioning: false
+    description: "WordPress 5.1 running on PHP 7.2"
+    nginx_upstream: php72
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+         - contentking
+         - query-monitor
+      wp_type: single
+      wp_version: 5.1
+    hosts:
+      - php72.wordpress51.test
+
+  wordpress51-php71:
+    skip_provisioning: false
+    description: "WordPress 5.1 running on PHP 7.1"
+    nginx_upstream: php71
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+         - contentking
+         - query-monitor
+      wp_type: single
+      wp_version: 5.1
+    hosts:
+      - php71.wordpress51.test
+
+  wordpress51-php70:
+    skip_provisioning: false
+    description: "WordPress 5.1 running on PHP 7.0"
+    nginx_upstream: php71
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+         - contentking
+         - query-monitor
+      wp_type: single
+      wp_version: 5.1
+    hosts:
+      - php70.wordpress51.test
+
+  wordpress51-php56:
+    skip_provisioning: false
+    description: "WordPress 5.1 running on PHP 5.6"
+    nginx_upstream: php56
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+         - contentking
+         - query-monitor
+      wp_type: single
+      wp_version: 5.1
+    hosts:
+      - php56.wordpress51.test
+
+  # Wordpress 5.0
+  wordpress50-php73:
+    skip_provisioning: false
+    description: "WordPress 5.0 running on PHP 7.3"
+    nginx_upstream: php73
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+        - contentking
+        - query-monitor
+      wp_type: single
+      wp_version: 5.0
+    hosts:
+      - php73.wordpress50.test
+
+  wordpress50-php72:
+    skip_provisioning: false
+    description: "WordPress 5.0 running on PHP 7.2"
+    nginx_upstream: php72
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+         - contentking
+         - query-monitor
+      wp_type: single
+      wp_version: 5.0
+    hosts:
+      - php72.wordpress50.test
+
+  wordpress50-php71:
+    skip_provisioning: false
+    description: "WordPress 5.0 running on PHP 7.1"
+    nginx_upstream: php71
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+         - contentking
+         - query-monitor
+      wp_type: single
+      wp_version: 5.0
+    hosts:
+      - php71.wordpress50.test
+
+  wordpress50-php70:
+    skip_provisioning: false
+    description: "WordPress 5.0 running on PHP 7.0"
+    nginx_upstream: php71
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+         - contentking
+         - query-monitor
+      wp_type: single
+      wp_version: 5.0
+    hosts:
+      - php70.wordpress50.test
+
+  wordpress50-php56:
+    skip_provisioning: false
+    description: "WordPress 5.0 running on PHP 5.6"
+    nginx_upstream: php56
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+         - contentking
+         - query-monitor
+      wp_type: single
+      wp_version: 5.0
+    hosts:
+      - php56.wordpress50.test
+
+  # WordPress 4.9
+  wordpress49-php73:
+    skip_provisioning: false
+    description: "WordPress 4.9 running on PHP 7.3"
+    nginx_upstream: php73
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+        - contentking
+        - query-monitor
+      wp_type: single
+      wp_version: 4.9
+    hosts:
+      - php73.wordpress49.test
+
+  wordpress49-php72:
+    skip_provisioning: false
+    description: "WordPress 4.9 running on PHP 7.2"
+    nginx_upstream: php72
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+        - contentking
+        - query-monitor
+      wp_type: single
+      wp_version: 4.9
+    hosts:
+      - php72.wordpress49.test
+
+  wordpress49-php71:
+    skip_provisioning: false
+    description: "WordPress 4.9 running on PHP 7.1"
+    nginx_upstream: php71
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+        - contentking
+        - query-monitor
+      wp_type: single
+      wp_version: 4.9
+    hosts:
+      - php71.wordpress49.test
+
+  wordpress49-php70:
+    skip_provisioning: false
+    description: "WordPress 4.9 running on PHP 7.0"
+    nginx_upstream: php70
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+        - contentking
+        - query-monitor
+      wp_type: single
+      wp_version: 4.9
+    hosts:
+      - php70.wordpress49.test
+
+  wordpress49-php56:
+    skip_provisioning: false
+    description: "WordPress 4.9 running on PHP 5.6"
+    nginx_upstream: php56
+    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
+    custom:
+      delete_default_plugins: true
+      install_plugins:
+        - contentking
+        - query-monitor
+      wp_type: single
+      wp_version: 4.9
+    hosts:
+      - php56.wordpress49.test
+
+# Utilities https://varyingvagrantvagrants.org/docs/en-US/utilities/
+# are system level items that aren't websites, that install tools or packages
+# the core utilities install tools such as phpmyadmin
+utilities:
+  core: # The core VVV utility
+    - tls-ca # HTTPS SSL/TLS certificates
+    - phpmyadmin # Web based database client
+    #- memcached-admin # Object cache management
+    #- opcache-status # opcache management
+    #- webgrind # PHP Debugging
+    #- mongodb # needed for Tideways/XHGui
+    #- tideways # PHP profiling tool, also installs xhgui check https://varyingvagrantvagrants.org/docs/en-US/references/tideways-xhgui/
+    - php56
+    - php70
+    - php71
+    - php72
+    - php73
+
+# vm_config controls how Vagrant provisions the virtual machine, and can be used to
+# increase the memory given to VVV and the number of CPU cores.
+# It can also be used to override the default provider being used within Vagrant.
+
+vm_config:
+  # For WP core development we recommend at least 2GB ( 2048 ),
+  # If you have 4GB of RAM, lower this to 768MB or you may encounter issues
+  memory: 2048
+  # CPU cores:
+  cores: 2
+
+  # this tells VVV to use the prebuilt box copied from the USB drive at contributor days
+  # once set to false, do not change back to true, and reprovision
+  # wordcamp_contributor_day_box: false
+
+  # Due to a limitation within Vagrant, the specified provider is only respected on a clean `vagrant up`
+  # as Vagrant currently restricts you to one provider per machine
+  # https://www.vagrantup.com/docs/providers/basic_usage.html#vagrant-up
+  # provider: vmware_workstation
+
+# General VVV options
+general:
+  # Backup the databases to the database/backups subfolder on halt/suspend/destroy, set to false to disable
+  db_backup: true
+  # Import the databases if they're missing from backups
+  db_restore: true
+  # set to true to use a synced shared folder for MariaDB database storage
+  db_share_type: false
+  # GitHub token to use from composer
+  #github_token: xxxxxx
+

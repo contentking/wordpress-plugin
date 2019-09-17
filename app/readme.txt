@@ -1,5 +1,5 @@
 === ContentKing ===
-Contributors: contentkingapp,buzzycat,samanta815
+Contributors: contentkingapp
 Tags: contentking, seo monitoring
 Requires at least: 3.3
 Tested up to: 4.9

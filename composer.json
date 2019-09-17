@@ -13,7 +13,7 @@
 		"wp-coding-standards/wpcs": "^0.13"
 	},
 	"scripts": {
-		"phpcs": "app/vendor/bin/phpcs --config-set installed_paths ../../../../app/vendor/wp-coding-standards/wpcs && app/vendor/bin/phpcs --ignore=./app/vendor/* --extensions=php --standard=WordPress ./app/",
+		"phpcs": "app/vendor/bin/phpcs --config-set installed_paths ../../../../app/vendor/wp-coding-standards/wpcs && app/vendor/bin/phpcs --ignore=./app/vendor/* --extensions=php --standard=ruleset.xml ./app/",
 		"phpcbf": "app/vendor/bin/phpcbf --config-set installed_paths ../../../../app/vendor/wp-coding-standards/wpcs && app/vendor/bin/phpcbf --ignore=./app/vendor/* --standard=WordPress ./app/",
 		"phpstan": "app/vendor/bin/phpstan analyze -c phpstan.neon --level 5 ./app/",
 		"check": "composer phpstan && composer phpcbf && composer phpcs;"

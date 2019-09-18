@@ -8,6 +8,7 @@
 		"techcrunch/wp-async-task": "@dev"
 	},
 	"require-dev": {
+		"j13k/yaml-lint": "~1.1.0",
 		"phpstan/phpstan": "^0.8",
 		"squizlabs/php_codesniffer": "^2.8",
 		"wp-coding-standards/wpcs": "^0.13"
@@ -16,6 +17,7 @@
 		"phpcs": "app/vendor/bin/phpcs --config-set installed_paths ../../../../app/vendor/wp-coding-standards/wpcs && app/vendor/bin/phpcs --ignore=./app/vendor/* --extensions=php --standard=ruleset.xml ./app/",
 		"phpcbf": "app/vendor/bin/phpcbf --config-set installed_paths ../../../../app/vendor/wp-coding-standards/wpcs && app/vendor/bin/phpcbf --ignore=./app/vendor/* --standard=WordPress ./app/",
 		"phpstan": "app/vendor/bin/phpstan analyze -c phpstan.neon --level 5 ./app/",
-		"check": "composer phpstan && composer phpcbf && composer phpcs;"
+		"check": "composer phpstan && composer phpcbf && composer phpcs;",
+		"yaml-lint": "app/vendor/bin/yaml-lint ./vvv-custom.yml"
 	}
 }

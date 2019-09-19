@@ -22,7 +22,7 @@ class ContentkingHelper implements ContentkingHelperInterface {
 		$urls = [];
 		global $sitepress;
 		// is_wpml?
-		if ( function_exists( 'icl_object_id' ) ) :
+		if ( function_exists( 'icl_object_id' ) && ! empty( $sitepress ) && method_exists( $sitepress, 'get_setting' ) ) :
 			// is wmpl multidomain?
 			if ( $sitepress->get_setting( 'language_negotiation_type', false ) === '2' ) :
 				$langs = icl_get_languages();

@@ -255,7 +255,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 		 */
 		public function after_upgrade_tasks( $upgrader, $hook_extra ) {
 
-			if ( ( ( 'plugin' === $hook_extra['type'] ) && in_array( plugin_basename( __FILE__ ), $hook_extra['package'], true ) ) || ( 'core' === $hook_extra['type'] ) ) :
+			if ( ( ( 'plugin' === $hook_extra['type'] ) && isset( $hook_extra['package'] ) && in_array( plugin_basename( __FILE__ ), $hook_extra['package'], true ) ) || ( 'core' === $hook_extra['type'] ) ) :
 
 				$api = new ContentkingAPI();
 				$token = get_option( 'contentking_client_token' );

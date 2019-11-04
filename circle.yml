@@ -26,6 +26,10 @@ jobs:
                     - app/vendor
 
             - run:
+                name: 'tests | Varying Vagrants Vagrant: lint vvv-custom.yml'
+                command: 'composer yaml-lint'
+
+            - run:
                 name: 'tests | WP plugin: PHP Code Sniffer'
                 command: 'composer phpcs'
 

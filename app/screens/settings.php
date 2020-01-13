@@ -83,7 +83,7 @@ if ( 5 < strlen( $contentking_client_token ) && '0' === $flag ) :
 	<li>
 	<?php
 	_e( // WPCS: XSS OK.
-		'Copy the <strong>CMS API</strong> token from the <strong>Integration tokens</strong> section.','contentking-plugin'
+		'Copy the <strong>CMS API</strong> token from the <strong><a href="https://app.contentkingapp.com/account/settings/integration_tokens" target="_blank">Integration tokens</a></strong> section.','contentking-plugin'
 	);
 			?>
 		 </li>

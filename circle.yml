@@ -5,7 +5,7 @@ jobs:
         working_directory: ~/wp-plugin
 
         docker:
-            - image: circleci/php:7.0.33
+            - image: circleci/php:7.3.13
 
         steps:
             - checkout

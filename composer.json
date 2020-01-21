@@ -9,9 +9,9 @@
 	},
 	"require-dev": {
 		"j13k/yaml-lint": "~1.1.0",
-		"phpstan/phpstan": "^0.8",
-		"squizlabs/php_codesniffer": "^2.8",
-		"wp-coding-standards/wpcs": "^0.13"
+		"phpstan/phpstan": "~0.12.0",
+		"squizlabs/php_codesniffer": "~2.9.0",
+		"wp-coding-standards/wpcs": "~0.13.0"
 	},
 	"scripts": {
 		"phpcs": "app/vendor/bin/phpcs --config-set installed_paths ../../../../app/vendor/wp-coding-standards/wpcs && app/vendor/bin/phpcs --ignore=./app/vendor/* --extensions=php --standard=ruleset.xml ./app/",

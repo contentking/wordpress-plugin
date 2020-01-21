@@ -4,7 +4,6 @@ parameters:
 		- %rootDir%/../../../../app/vendor/*
 	ignoreErrors:
 		- '#Call to static method get_base_url\(\) on an unknown class WPSEO_Sitemaps_Router.#'
-		- '#Constant DOING_AUTOSAVE not found.#'
 		- '#Function __ not found.#'
 		- '#Function _e not found.#'
 		- '#Function esc_html__ not found.#'
@@ -44,8 +43,4 @@ parameters:
 		- '#Function wp_remote_post not found.#'
 		- '#Function wp_register_style not found.#'
 		- '#Function wp_enqueue_style not found.#'
-		- '#Undefined variable: \$menu#'
-		- '#Undefined variable: \$post#'
-		- '#Undefined variable: \$sitepress#'
-		- '#Undefined variable: \$submenu#'
-		- '#Undefined variable: \$wp_version#'
+		- '#Right side of || is always false.#'

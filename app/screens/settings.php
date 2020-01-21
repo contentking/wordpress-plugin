@@ -76,7 +76,7 @@ if ( 5 < strlen( $contentking_client_token ) && '0' === $flag ) :
 	<li>
 	<?php
 	_e( // WPCS: XSS OK.
-		'Go to <strong>Account</strong> then <strong>Team profile</strong>.','contentking-plugin'
+		'Go to <strong>Account</strong> then <strong>Account Settings</strong>.','contentking-plugin'
 	);
 			?>
 		 </li>

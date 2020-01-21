@@ -12,6 +12,7 @@ Real-time SEO auditing and content tracking for your website.
 Plugin requires PHP version >= 5.5.
 
 == Changelog ==
+= 1.5.10 = Improved copy on main plugin screen
 = 1.5.9 = Update compatible WordPress versions, update list of plugin developers, small bugfix.
 = 1.5.8 = Change main file name back.
 = 1.5.7 = Prioritization token renamed.

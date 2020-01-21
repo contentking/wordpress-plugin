@@ -43,4 +43,5 @@ parameters:
 		- '#Function wp_remote_post not found.#'
 		- '#Function wp_register_style not found.#'
 		- '#Function wp_enqueue_style not found.#'
-		- '#Right side of || is always false.#'
+		- '#Right side of \|\| is always false.#'
+		- '#Strict comparison using \=\=\= between null and object will always evaluate to false.#'

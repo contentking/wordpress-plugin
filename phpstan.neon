@@ -26,6 +26,7 @@ parameters:
 		- '#Function get_post_type_object not found.#'
 		- '#Function get_rest_url not found.#'
 		- '#Function get_site_url not found.#'
+		- '#Function is_admin_bar_showing not found.#'
 		- '#Function is_page not found.#'
 		- '#Function is_single not found.#'
 		- '#Function is_wp_error not found.#'

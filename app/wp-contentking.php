@@ -448,8 +448,10 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 		 */
 		public function register_contentking_adminbar_styles() {
 
-			wp_register_style( 'contentking-stylesheet', plugins_url( 'assets/css/admin.css', __FILE__ ) );
-			wp_enqueue_style( 'contentking-stylesheet' );
+			if ( is_admin_bar_showing() ) {
+				wp_register_style( 'contentking-stylesheet', plugins_url( 'assets/css/admin.css', __FILE__ ) );
+				wp_enqueue_style( 'contentking-stylesheet' );
+			}
 
 		}
 

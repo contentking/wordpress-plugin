@@ -187,24 +187,9 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 			);
 
 			register_setting( 'contentking_setting_section', 'contentking_client_token', array(
-				'sanitize_callback' => 'sanitization_token',
+				'sanitize_callback' => 'sanitize_text_field',
 			) );
 		} // END public function admin_init.
-
-
-		/**
-		 * Sanitize token on save
-		 *
-		 * @param string $option - Option string to be sanitized.
-		 * @return string - Sanitized option.
-		 */
-		public function sanitization_token( $option ) {
-
-			$option = sanitize_text_field( $option );
-
-			return $option;
-
-		}
 
 		/**
 		 * Just empty callback.

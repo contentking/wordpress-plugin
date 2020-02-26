@@ -186,7 +186,9 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 				'contentking_setting_section'
 			);
 
-			register_setting( 'contentking_setting_section', 'contentking_client_token', 'sanitization_token' );
+			register_setting( 'contentking_setting_section', 'contentking_client_token', array(
+				'sanitize_callback' => 'sanitization_token',
+			) );
 		} // END public function admin_init.
 
 

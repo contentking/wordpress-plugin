@@ -1,4 +1,7 @@
 {
+	"name": "contentking/wordpress-plugin",
+	"description": "ContentKing WordPress plugin.",
+	"license": "GPL-2.0-or-later",
 	"config": {
 		"sort-packages": true,
 		"vendor-dir": "app/vendor"

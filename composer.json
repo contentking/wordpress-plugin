@@ -6,7 +6,7 @@
 		"sort-packages": true,
 		"vendor-dir": "app/vendor"
 	},
-	"type": "project",
+	"type": "wordpress-plugin",
 	"require": {
 		"techcrunch/wp-async-task": "@dev"
 	},

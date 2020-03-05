@@ -1,9 +1,12 @@
 {
+	"name": "contentking/wordpress-plugin",
+	"description": "ContentKing WordPress plugin.",
+	"license": "GPL-2.0-or-later",
 	"config": {
 		"sort-packages": true,
 		"vendor-dir": "app/vendor"
 	},
-	"type": "project",
+	"type": "wordpress-plugin",
 	"require": {
 		"techcrunch/wp-async-task": "@dev"
 	},

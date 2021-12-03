@@ -6,7 +6,6 @@ parameters:
 	excludes_analyse:
 		- %rootDir%/../../../../app/vendor/*
 	ignoreErrors:
-		- '#Call to static method get_base_url\(\) on an unknown class WPSEO_Sitemaps_Router.#'
 		- '#Function icl_get_languages not found.#'
 		- '#Right side of \|\| is always false.#'
 		- '#Strict comparison using \=\=\= between null and object will always evaluate to false.#'

@@ -17,7 +17,8 @@
 	"scripts": {
 		"phpcs": "app/vendor/bin/phpcs --config-set installed_paths ../../../../app/vendor/wp-coding-standards/wpcs && app/vendor/bin/phpcs --ignore=./app/vendor/* --extensions=php --standard=ruleset.xml ./app/",
 		"phpcbf": "app/vendor/bin/phpcbf --config-set installed_paths ../../../../app/vendor/wp-coding-standards/wpcs && app/vendor/bin/phpcbf --ignore=./app/vendor/* --standard=WordPress ./app/",
-		"phpstan": "app/vendor/bin/phpstan analyze --memory-limit 256M -c phpstan.neon --level 5 ./app/",
+		"phpstan": "app/vendor/bin/phpstan analyze --memory-limit 256M",
+		"phpstanBaseline": "app/vendor/bin/phpstan analyse --memory-limit 256M --generate-baseline",
 		"check": "composer phpstan && composer phpcbf && composer phpcs;",
 		"yaml-lint": "app/vendor/bin/yaml-lint ./vvv-custom.yml"
 	}

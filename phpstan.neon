@@ -1,12 +1,20 @@
 includes:
 	- app/vendor/szepeviktor/phpstan-wordpress/extension.neon
+	- phpstan-baseline.neon
 
 parameters:
-	bootstrap: %rootDir%/../../../../bootstrap-phpstan.php
-	excludes_analyse:
+	bootstrapFiles:
+		- %rootDir%/../../../../bootstrap-phpstan.php
+
+	excludePaths:
 		- %rootDir%/../../../../app/vendor/*
+
 	ignoreErrors:
-		- '#Call to static method get_base_url\(\) on an unknown class WPSEO_Sitemaps_Router.#'
 		- '#Function icl_get_languages not found.#'
 		- '#Right side of \|\| is always false.#'
 		- '#Strict comparison using \=\=\= between null and object will always evaluate to false.#'
+
+	level: 5
+
+	paths:
+		- ./app/

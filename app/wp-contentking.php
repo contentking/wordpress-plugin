@@ -136,7 +136,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 
 					$api = new ContentkingAPI();
 					$token = get_option( 'contentking_client_token' );
-					if ( $api->update_status( $token, true ) === true ) :
+					if ( $api->update_status( true, $token ) === true ) :
 						update_option( 'contentking_status_flag', '1' );
 					else :
 						update_option( 'contentking_status_flag', '0' );
@@ -155,7 +155,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 
 			$api = new ContentkingAPI();
 			$token = get_option( 'contentking_client_token' );
-			$api->update_status( $token, false );
+			$api->update_status( false, $token );
 
 		} // END public static function deactivate().
 
@@ -207,7 +207,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 
 			// sending request to Contentking API.
 			$api = new ContentkingAPI();
-			if ( true === $api->update_status( $value, true ) ) :
+			if ( true === $api->update_status( true, $value ) ) :
 				update_option( 'contentking_status_flag', '1' );
 			else :
 				update_option( 'contentking_status_flag', '0' );
@@ -225,7 +225,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 
 			// sending request to Contentking API.
 			$api = new ContentkingAPI();
-			if ( true === $api->update_status( $new_value, true ) ) :
+			if ( true === $api->update_status( true, $new_value ) ) :
 				update_option( 'contentking_status_flag', '1' );
 			else :
 				update_option( 'contentking_status_flag', '0' );
@@ -247,7 +247,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 				$api = new ContentkingAPI();
 				$token = get_option( 'contentking_client_token' );
 
-				if ( $api->update_status( $token, true ) === true ) :
+				if ( $api->update_status( true, $token ) === true ) :
 					update_option( 'contentking_status_flag', '1' );
 				else :
 					update_option( 'contentking_status_flag', '0' );
@@ -294,7 +294,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 					$api = new ContentkingAPI();
 					$token = get_option( 'contentking_client_token' );
 
-					if ( $api->update_status( $token, true ) === true ) :
+					if ( $api->update_status( true, $token ) === true ) :
 						update_option( 'contentking_status_flag', '1' );
 						else :
 							update_option( 'contentking_status_flag', '0' );

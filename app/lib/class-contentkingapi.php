@@ -24,21 +24,21 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	/**
 	 * Prepare api call to update status.
 	 *
-	 * @param string $token API secret token to be validated.
 	 * @param bool   $status plugin status (false - deactivated, true - activated).
+	 * @param string $token API secret token to be validated.
 	 * @return Bool
 	 */
-	public function update_status( $token = '', $status ) {
+	public function update_status( $status, $token = '' ) {
 
 		if ( '' === $token ) :
 			$token = get_option( 'contentking_client_token' );
 		endif;
 
 		$data = $this->prepare_request_data(
-			[
+			'update_status', [
 				'token' => $token,
 				'status' => $status,
-			], 'update_status'
+			]
 		);
 		$response = wp_remote_post( $this->api_url . 'update_status', $data );
 		if ( is_wp_error( $response ) ) :
@@ -61,9 +61,9 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	public function check_url( $url = '' ) {
 
 		$data = $this->prepare_request_data(
-			[
+			'check_url', [
 				'url' => $url,
-			], 'check_url'
+			]
 		);
 		$response = wp_remote_post( $this->api_url . 'check_url', $data );
 
@@ -87,11 +87,11 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	/**
 	 * Prepare HTTP request data for API call
 	 *
-	 * @param array  $data input data.
 	 * @param string $method name of request.
+	 * @param array  $data input data.
 	 * @return Array HTTP request data.
 	 */
-	public function prepare_request_data( $data = [], $method ) {
+	public function prepare_request_data( $method, $data = [] ) {
 
 		if ( empty( $data ) ) {
 			return [];

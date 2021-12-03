@@ -13,11 +13,11 @@ interface ContentkingAPIInterface {
 	/**
 	 * Prepare api call to update status.
 	 *
-	 * @param string $token API secret token to be validated.
 	 * @param bool   $status plugin status (false - deactivated, true - activated).
+	 * @param string $token API secret token to be validated.
 	 * @return Bool
 	 */
-	public function update_status( $token, $status );
+	public function update_status( $status, $token );
 
 	/**
 	 * Performs api call to send URL to Contentking.
@@ -30,9 +30,9 @@ interface ContentkingAPIInterface {
 	/**
 	 * Prepare HTTP request data for API call
 	 *
-	 * @param array  $data input data.
 	 * @param string $method name of request.
+	 * @param array  $data input data.
 	 * @return array HTTP request data.
 	 */
-	public function prepare_request_data( $data = [], $method );
+	public function prepare_request_data( $method, $data = [] );
 }

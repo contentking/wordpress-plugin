@@ -6,9 +6,9 @@
  * @package contentking-plugin
  */
 
- /**
-  * Interface for class ContentkingHelper
-  */
+/**
+ * Interface for class ContentkingHelper
+ */
 interface ContentkingHelperInterface {
 
 	/**

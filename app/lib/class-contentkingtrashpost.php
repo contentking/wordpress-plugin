@@ -5,11 +5,11 @@
  * @package contentking-plugin
  */
 
- /**
-  * Class ContentkingTrashPost.
-  *
-  * @package contentking-plugin
-  */
+/**
+ * Class ContentkingTrashPost.
+ *
+ * @package contentking-plugin
+ */
 class ContentkingTrashPost extends WP_Async_Task {
 
 	/**
@@ -31,7 +31,7 @@ class ContentkingTrashPost extends WP_Async_Task {
 	 *
 	 * @var array
 	 */
-	private $urls = [];
+	private $urls = array();
 
 	/**
 	 * Prepare POST data to send to session that processes the task
@@ -47,13 +47,13 @@ class ContentkingTrashPost extends WP_Async_Task {
 			$post_type_data = get_post_type_object( $post_obj->post_type );
 		if ( intval( $post_type_data->public ) === 1 || intval( $post_type_data->publicly_queryable ) === 1 ) : // Post has public URL.
 
-			$url = get_permalink( $data[0] );
+			$url       = get_permalink( $data[0] );
 			$fixed_url = str_replace( '__trashed', '', $url ); // Fix url in case parent page was thrashed recently.
 			array_push( $this->urls, $fixed_url ); // Only data from last call will be used in async task.
 
-			return [
+			return array(
 				'urls' => $this->urls,
-			];
+			);
 
 			endif;
 
@@ -67,8 +67,8 @@ class ContentkingTrashPost extends WP_Async_Task {
 	 */
 	protected function run_action() {
 
-		if ( isset( $_POST['urls'] ) ) :// WPCS: input var ok, CSRF ok.
-			do_action( "wp_async_$this->action", $_POST['urls'] );// WPCS: input var ok, sanitization ok, CSRF ok.
+		if ( isset( $_POST['urls'] ) ) : // phpcs:ignore WordPress.Security.NonceVerificationSniff. CSRF.
+			do_action( "wp_async_$this->action", $_POST['urls'] ); // phpcs:ignore WordPress.Security.NonceVerificationSniff,WordPress.Security.ValidatedSanitizedInputSniff. CSRF ok, sanitization ok.
 		endif;
 
 	}

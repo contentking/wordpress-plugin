@@ -34,5 +34,5 @@ interface ContentkingAPIInterface {
 	 * @param array  $data input data.
 	 * @return array HTTP request data.
 	 */
-	public function prepare_request_data( $method, $data = [] );
+	public function prepare_request_data( $method, $data = array() );
 }

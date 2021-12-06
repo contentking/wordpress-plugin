@@ -84,14 +84,14 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 			// Define new action for XML sitemap.
 			add_action( 'admin_init', array( &$this, 'define_action_contentking_updated_sitemap' ) );
 
-		} // END public function __construct.
+		}
 
 		/**
 		 * Instantiate WP_Async_Task for each hook.
 		 */
 		public function instantiate_async() {
-			$async_save_post    = new ContentkingSavePost( WP_Async_Task::LOGGED_IN );
-			$async_trash_post = new ContentkingTrashPost( WP_Async_Task::LOGGED_IN );
+			$async_save_post                   = new ContentkingSavePost( WP_Async_Task::LOGGED_IN );
+			$async_trash_post                  = new ContentkingTrashPost( WP_Async_Task::LOGGED_IN );
 			$async_contentking_updated_sitemap = new ContentkingChangeSitemap( WP_Async_Task::LOGGED_IN );
 		}
 
@@ -134,7 +134,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 			elseif ( '0' === $flag ) :
 				if ( get_option( 'contentking_client_token' ) !== false ) :
 
-					$api = new ContentkingAPI();
+					$api   = new ContentkingAPI();
 					$token = get_option( 'contentking_client_token' );
 					if ( $api->update_status( true, $token ) === true ) :
 						update_option( 'contentking_status_flag', '1' );
@@ -146,18 +146,18 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 
 			endif;
 
-		} // END public static function activate.
+		}
 
 		/**
 		 * Deactivate the plugin
 		 */
 		public static function deactivate() {
 
-			$api = new ContentkingAPI();
+			$api   = new ContentkingAPI();
 			$token = get_option( 'contentking_client_token' );
 			$api->update_status( false, $token );
 
-		} // END public static function deactivate().
+		}
 
 
 		/**
@@ -186,10 +186,14 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 				'contentking_setting_section'
 			);
 
-			register_setting( 'contentking_setting_section', 'contentking_client_token', array(
-				'sanitize_callback' => 'sanitize_text_field',
-			) );
-		} // END public function admin_init.
+			register_setting(
+				'contentking_setting_section',
+				'contentking_client_token',
+				array(
+					'sanitize_callback' => 'sanitize_text_field',
+				)
+			);
+		}
 
 		/**
 		 * Just empty callback.
@@ -244,7 +248,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 
 			if ( ( ( 'plugin' === $hook_extra['type'] ) && isset( $hook_extra['package'] ) && in_array( plugin_basename( __FILE__ ), $hook_extra['package'], true ) ) || ( 'core' === $hook_extra['type'] ) ) :
 
-				$api = new ContentkingAPI();
+				$api   = new ContentkingAPI();
 				$token = get_option( 'contentking_client_token' );
 
 				if ( $api->update_status( true, $token ) === true ) :
@@ -262,7 +266,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 		 */
 		public function define_action_contentking_updated_sitemap() {
 
-			if ( isset( $_POST['wpseo_xml'] ) ) :// WPCS: input var ok, CSRF ok.
+			if ( isset( $_POST['wpseo_xml'] ) ) :// PHPCS:ignore input var ok, CSRF ok.
 
 				do_action( 'contentking_updated_sitemap' );
 
@@ -291,7 +295,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 			if ( ! empty( $_POST ) && check_admin_referer( 'contentking_validate_token', 'ck_validate_token' ) ) {// WPCS: input var ok.
 				if ( isset( $_POST['validate_contentking_token'] ) && '1' === $_POST['validate_contentking_token'] ) :// WPCS: input var ok.
 					// Attempt to validate token.
-					$api = new ContentkingAPI();
+					$api   = new ContentkingAPI();
 					$token = get_option( 'contentking_client_token' );
 
 					if ( $api->update_status( true, $token ) === true ) :
@@ -303,7 +307,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 				endif;
 			}
 			// Render the main page template.
-			include( sprintf( '%s/screens/settings.php', dirname( __FILE__ ) ) );
+			include sprintf( '%s/screens/settings.php', dirname( __FILE__ ) );
 
 		}
 
@@ -326,27 +330,27 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 			// Show green or red button in admin top bar.
 			if ( '1' === $result ) :
 
-				$args = [
-					'id' => 'contentking',
+				$args = array(
+					'id'    => 'contentking',
 					'title' => '<span>' . __( 'ContentKing', 'contentking-plugin' ) . '</span>',
-					'href' => get_admin_url() . 'options-general.php?page=contentking',
-					'meta' => [
+					'href'  => get_admin_url() . 'options-general.php?page=contentking',
+					'meta'  => array(
 						'title' => 'ContentKing',
 						'class' => 'contentking-green-notification',
-					],
-				];
+					),
+				);
 
 			else :
 
-				$args = [
-					'id' => 'contentking',
+				$args = array(
+					'id'    => 'contentking',
 					'title' => '<span> ' . __( 'ContentKing', 'contentking-plugin' ) . '</span>',
-					'href' => get_admin_url() . 'options-general.php?page=contentking',
-					'meta' => [
+					'href'  => get_admin_url() . 'options-general.php?page=contentking',
+					'meta'  => array(
 						'title' => 'ContentKing',
 						'class' => 'contentking-red-notification',
-					],
-				];
+					),
+				);
 
 			endif;
 
@@ -361,7 +365,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 		 */
 		public function get_post_id_from_url() {
 
-			if ( ! empty( $_POST ) && isset( $_POST['ck_get_url'] ) ) :// WPCS: input var ok, CSRF ok.
+			if ( ! empty( $_POST ) && isset( $_POST['ck_get_url'] ) ) :// PHPCS:ignore input var ok, CSRF ok.
 				if ( is_single() || is_page() ) :
 					global $post;
 					echo wp_json_encode( $post->ID );
@@ -382,9 +386,11 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 		public function rest_admin_edit_url() {
 
 			register_rest_route(
-				'contentking/v1', '/admin_url/', array(
+				'contentking/v1',
+				'/admin_url/',
+				array(
 
-					'methods' => 'POST',
+					'methods'  => 'POST',
 					'callback' => array( &$this, 'get_admin_url' ),
 
 				)
@@ -405,18 +411,18 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 			if ( isset( $headers['contentking_token'] ) ) :
 				if ( get_option( 'contentking_client_token' ) === $headers['contentking_token'][0] ) :
 
-					$array_data = (array) $data->get_body();
+					$array_data   = (array) $data->get_body();
 					$decoded_data = json_decode( $array_data[0], true );
 
 					if ( isset( $decoded_data['url'] ) ) :
 						// Try to get post id from public URL.
-						$args = array(
+						$args     = array(
 							'body' => array(
 								'ck_get_url' => 'true',
 							),
 						);
 						$response = wp_remote_post( $decoded_data['url'], $args );
-						$post_id = json_decode( $response['body'] );
+						$post_id  = json_decode( $response['body'] );
 
 						if ( $post_id > 0 ) :
 							return admin_url( 'post.php' ) . "?post=$post_id&action=edit";
@@ -431,12 +437,14 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 		}
 
 		/**
-		 * Styles for top admin bar notifcation area
+		 * Styles for top admin bar notification area
 		 */
 		public function register_contentking_adminbar_styles() {
 
 			if ( is_admin_bar_showing() ) {
+				// phpcs:disable
 				wp_register_style( 'contentking-stylesheet', plugins_url( 'assets/css/admin.css', __FILE__ ) );
+				// phpcs:enable
 				wp_enqueue_style( 'contentking-stylesheet' );
 			}
 
@@ -453,10 +461,14 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 				return;
 			}
 
+			// phpcs:disable
 			wp_register_style( 'fontello-stylesheet', plugins_url( 'assets/fonts/css/fontello.css', __FILE__ ) );
+			// phpcs:enable
 			wp_enqueue_style( 'fontello-stylesheet' );
 
+			// phpcs:disable
 			wp_register_style( 'icon-stylesheet', plugins_url( 'assets/css/icons.css', __FILE__ ) );
+			// phpcs:enable
 			wp_enqueue_style( 'icon-stylesheet' );
 		}
 

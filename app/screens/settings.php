@@ -30,7 +30,7 @@ endif;
 
 				$flag = get_option( 'contentking_status_flag' );
 				if ( '1' === $flag ) :
-				?>
+					?>
 
 					<i class = "icon-ok"> </i>
 
@@ -57,56 +57,62 @@ if ( 5 < strlen( $contentking_client_token ) && '0' === $flag ) :
 	<input type="hidden" name="validate_contentking_token" value="1"/>
 	<input name="Validate" type="submit" class="button button-primary" value="<?php echo esc_attr__( 'Validate token', 'contentking-plugin' ); ?>" />
 	<p class="error">
-	<?php esc_html__( 'It looks like your CMS API token is not validated. Click to validate.','contentking-plugin' ); ?>
+	<?php esc_html__( 'It looks like your CMS API token is not validated. Click to validate.', 'contentking-plugin' ); ?>
 	</p>
 	</form>
 
-<?php
+	<?php
 	endif;
-	?>
+?>
 <h2> <?php echo esc_html__( 'Instructions', 'contentking-plugin' ); ?></h2>
 <ol>
 	<li>
 	<?php
-	_e( // WPCS: XSS OK.
-		'In a new window, log in to the ContentKing app.','contentking-plugin'
+	_e( // PHPCS:ignore XSS OK.
+		'In a new window, log in to the ContentKing app.',
+		'contentking-plugin'
 	);
-			?>
-		 </li>
+	?>
+	</li>
 	<li>
 	<?php
-	_e( // WPCS: XSS OK.
-		'Go to <strong>Account</strong> then <strong>Account Settings</strong>.','contentking-plugin'
+	_e( // PHPCS:ignore XSS OK.
+		'Go to <strong>Account</strong> then <strong>Account Settings</strong>.',
+		'contentking-plugin'
 	);
-			?>
-		 </li>
+	?>
+	</li>
 	<li>
 	<?php
-	_e( // WPCS: XSS OK.
-		'Copy the <strong>CMS API</strong> token from the <strong><a href="https://app.contentkingapp.com/account/settings/integration_tokens" target="_blank">Integration tokens</a></strong> section.','contentking-plugin'
+	_e( // PHPCS:ignore XSS OK.
+		'Copy the <strong>CMS API</strong> token from the <strong><a href="https://app.contentkingapp.com/account/settings/integration_tokens" target="_blank">Integration tokens</a></strong> section.',
+		'contentking-plugin'
 	);
-			?>
-		 </li>
+	?>
+	</li>
 	<li>
 	<?php
-	_e( // WPCS: XSS OK.
-		'Come back to this WordPress screen and paste it into the <strong>CMS API token</strong> field.','contentking-plugin'
+	_e( // PHPCS:ignore XSS OK.
+		'Come back to this WordPress screen and paste it into the <strong>CMS API token</strong> field.',
+		'contentking-plugin'
 	);
-			?>
-		 </li>
+	?>
+	</li>
 	<li>
 	<?php
-	_e( // WPCS: XSS OK.
-		'Press <strong>Save changes</strong> and once you see the green validation tick mark, you\'re good to go.','contentking-plugin'
+	_e( // PHPCS:ignore XSS OK.
+		'Press <strong>Save changes</strong> and once you see the green validation tick mark, you\'re good to go.',
+		'contentking-plugin'
 	);
-			?>
-		 </li>
+	?>
+	</li>
 </ol>
 <p>
 <?php
-_e( // WPCS: XSS OK.
+_e(// PHPCS:ignore XSS OK.
 	'The ContentKing plugin is active when you see its name in green in the upper WordPress bar.<br/>
-As always, our Support team is ready to help if you have any trouble.', 'contentking-plugin'
+As always, our Support team is ready to help if you have any trouble.',
+	'contentking-plugin'
 );
 ?>
 </p>

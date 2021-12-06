@@ -2,8 +2,6 @@
 <ruleset name="ContentKing" namespace="ContentKing">
     <description>ContentKing WP plugin Coding Standards</description>
 
-    <autoload>./PHPCSAliases.php</autoload>
-
     <rule ref="WordPress"/>
 
     <rule ref="WordPress.Files.FileName">

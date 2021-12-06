@@ -7,13 +7,13 @@
  * @package contentking-plugin
  */
 
- /**
-  * Class ContentkingChangeSitemap.
-  *
-  * @class
-  * Extends WordPress Async Task.
-  * @package contentking-plugin
-  */
+/**
+ * Class ContentkingChangeSitemap.
+ *
+ * @class
+ * Extends WordPress Async Task.
+ * @package contentking-plugin
+ */
 class ContentkingChangeSitemap extends WP_Async_Task {
 
 	/**
@@ -42,9 +42,9 @@ class ContentkingChangeSitemap extends WP_Async_Task {
 
 			$url = WPSEO_Sitemaps_Router::get_base_url( 'sitemap_index.xml' );
 
-			return [
-				'wpseo_xml' => [ $url ],
-			];
+			return array(
+				'wpseo_xml' => array( $url ),
+			);
 
 		endif;
 
@@ -58,8 +58,8 @@ class ContentkingChangeSitemap extends WP_Async_Task {
 	 */
 	protected function run_action() {
 
-		if ( isset( $_POST['wpseo_xml'] ) ) : // WPCS: input var ok, CSRF ok.
-			do_action( "wp_async_$this->action", $_POST['wpseo_xml'] );// WPCS: input var ok, sanitization ok CSRF ok.
+		if ( isset( $_POST['wpseo_xml'] ) ) : // phpcs:ignore WordPress.Security.NonceVerificationSniff. CSRF.
+			do_action( "wp_async_$this->action", $_POST['wpseo_xml'] ); // phpcs:ignore WordPress.Security.NonceVerificationSniff,WordPress.Security.ValidatedSanitizedInputSniff. CSRF ok, sanitization ok.
 		endif;
 
 	}

@@ -7,11 +7,11 @@
  * @package contentking-plugin
  */
 
- /**
-  * Class ContentkingAPI.
-  *
-  * @package contentking-plugin
-  */
+/**
+ * Class ContentkingAPI.
+ *
+ * @package contentking-plugin
+ */
 class ContentkingAPI implements ContentkingAPIInterface {
 
 	/**
@@ -34,11 +34,12 @@ class ContentkingAPI implements ContentkingAPIInterface {
 			$token = get_option( 'contentking_client_token' );
 		endif;
 
-		$data = $this->prepare_request_data(
-			'update_status', [
-				'token' => $token,
+		$data     = $this->prepare_request_data(
+			'update_status',
+			array(
+				'token'  => $token,
 				'status' => $status,
-			]
+			)
 		);
 		$response = wp_remote_post( $this->api_url . 'update_status', $data );
 		if ( is_wp_error( $response ) ) :
@@ -60,10 +61,11 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	 */
 	public function check_url( $url = '' ) {
 
-		$data = $this->prepare_request_data(
-			'check_url', [
+		$data     = $this->prepare_request_data(
+			'check_url',
+			array(
 				'url' => $url,
-			]
+			)
 		);
 		$response = wp_remote_post( $this->api_url . 'check_url', $data );
 
@@ -91,10 +93,10 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	 * @param array  $data input data.
 	 * @return Array HTTP request data.
 	 */
-	public function prepare_request_data( $method, $data = [] ) {
+	public function prepare_request_data( $method, $data = array() ) {
 
 		if ( empty( $data ) ) {
-			return [];
+			return array();
 		}
 
 		if ( isset( $data['token'] ) ) :
@@ -103,31 +105,31 @@ class ContentkingAPI implements ContentkingAPIInterface {
 			$token = get_option( 'contentking_client_token' );
 		endif;
 
-		$prepared_data = [
-			'headers' => [
-				'Content-Type' => 'application/json',
+		$prepared_data = array(
+			'headers' => array(
+				'Content-Type'  => 'application/json',
 				'Authorization' => 'token ' . $token,
-			],
-		];
+			),
+		);
 
 		if ( 'check_url' === $method ) :
 
-			$prepared_data['body'] = wp_json_encode( [] );
+			$prepared_data['body'] = wp_json_encode( array() );
 			if ( isset( $data['url'] ) ) :
 				$prepared_data['body'] = wp_json_encode(
-					[
+					array(
 						'url' => $data['url'],
-					]
+					)
 				);
 			endif;
 
 		elseif ( 'update_status' === $method ) :
-			$body_data = [];
-			$body_data['status'] = $data['status'];
-			$body_data['type'] = 'wordpress'; // WPCS: spelling ok.
-			$helper = new ContentkingHelper();
+			$body_data             = array();
+			$body_data['status']   = $data['status'];
+			$body_data['type']     = 'wordpress'; // phpcs:ignore spelling ok.
+			$helper                = new ContentkingHelper();
 			$body_data['websites'] = $helper->get_websites();
-			$body_data['features']  = $helper->get_features();
+			$body_data['features'] = $helper->get_features();
 			$prepared_data['body'] = wp_json_encode( $body_data );
 		endif;
 

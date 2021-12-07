@@ -2,7 +2,7 @@
 Contributors: contentkingapp
 Tags: contentking, seo monitoring
 Requires at least: 3.3
-Tested up to: 5.2
+Tested up to: 5.8
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,6 +12,7 @@ Real-time SEO auditing and content tracking for your website.
 Plugin requires PHP version >= 5.5.
 
 == Changelog ==
+= 1.5.12 = Update compatible WordPress versions
 = 1.5.11 = Plugin assets are not loaded when admin bar is not showing
 = 1.5.10 = Improved copy on main plugin screen
 = 1.5.9 = Update compatible WordPress versions, update list of plugin developers, small bugfix.

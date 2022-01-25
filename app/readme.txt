@@ -2,7 +2,7 @@
 Contributors: contentkingapp
 Tags: contentking, seo monitoring
 Requires at least: 3.3
-Tested up to: 5.8
+Tested up to: 5.9
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -30,6 +30,7 @@ See why brands like Netflix, H&M, Condé Nast and FedEx use ContentKing to win a
 Plugin requires PHP version >= 5.5.
 
 == Changelog ==
+= 1.5.14 = Update compatible WordPress versions
 = 1.5.13 = Changed the name and description of the plugin
 = 1.5.12 = Update compatible WordPress versions
 = 1.5.11 = Plugin assets are not loaded when admin bar is not showing

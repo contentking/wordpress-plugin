@@ -1,6 +1,6 @@
-# Contentking WordPress plugin
+# ContentKing for Conductor WordPress plugin
 
-Real-time SEO auditing and content tracking for your website. 
+Real-time SEO Auditing & Monitoring Platform
 
 ## Installation
 

@@ -1,4 +1,4 @@
-=== ContentKing ===
+=== ContentKing for Conductor ===
 Contributors: contentkingapp
 Tags: contentking, seo monitoring
 Requires at least: 3.3
@@ -7,11 +7,30 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Real-time SEO auditing and content tracking for your website.
+Real-time SEO Auditing & Monitoring Platform
+
+== Description ==
+Ensure customers find your most valuable digital content with 24/7 website monitoring from ContentKing, **now part of the #1 enterprise organic marketing platform from Conductor**.
+
+Website changes happen, and they happen fast. 
+
+That’s where **ContentKing for Conductor** comes in. 
+
+As the only real-time SEO monitoring and auditing platform, ContentKing keeps track of everything happening on your site as it happens. If links suddenly break or pages become non-indexable or a page title changes — you’re covered. 
+
+ContentKing continuously monitors your site, alerts you to on-page issues and changes in real time, and gives you the opportunity to fix on-page SEO problems before your rankings are impacted. 
+
+No more waiting for a crawl. No more working with lagging data. And no more unnoticed issues. 
+
+You’ll have eyes on your site 24/7 and a user-friendly interface that gives you a complete overview of your SEO performance so that you can transform data into actionable insights. All in real time. 
+
+See why brands like Netflix, H&M, Condé Nast and FedEx use ContentKing to win at SEO.
+
 == Requirements ==
 Plugin requires PHP version >= 5.5.
 
 == Changelog ==
+= 1.5.13 = Changed the name and description of the plugin
 = 1.5.12 = Update compatible WordPress versions
 = 1.5.11 = Plugin assets are not loaded when admin bar is not showing
 = 1.5.10 = Improved copy on main plugin screen

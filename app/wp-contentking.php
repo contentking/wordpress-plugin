@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name:     ContentKing
- * Description:     Real-time SEO auditing and content tracking for your website.
+ * Plugin Name:     ContentKing for Conductor
+ * Description:     Real-time SEO Auditing & Monitoring Platform
  * Author:          ContentKing
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         1.5.12
+ * Version:         1.5.13
  *
  * @package         contentking-plugin
  */

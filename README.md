@@ -1,4 +1,4 @@
-#  ContentKing WordPress Plugin
+#  ContentKing for Conductor WordPress Plugin
 
 - https://www.contentkingapp.com/support/wordpress-plugin/
 - https://wordpress.org/plugins/contentking/

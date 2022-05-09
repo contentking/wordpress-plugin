@@ -30,6 +30,7 @@ See why brands like Netflix, H&M, Condé Nast and FedEx use ContentKing to win a
 Plugin requires PHP version >= 5.5.
 
 == Changelog ==
+= 1.5.15 = Update the status when plugin is deactivated
 = 1.5.14 = Update compatible WordPress versions
 = 1.5.13 = Changed the name and description of the plugin
 = 1.5.12 = Update compatible WordPress versions

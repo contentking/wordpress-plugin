@@ -6,7 +6,7 @@
  * Author URI:      https://www.contentkingapp.com/
  * Text Domain:     contentking-plugin
  * Domain Path:
- * Version:         1.5.14
+ * Version:         1.5.15
  *
  * @package         contentking-plugin
  */
@@ -156,7 +156,7 @@ if ( ! class_exists( 'WP_Contentking' ) ) :
 			$api   = new ContentkingAPI();
 			$token = get_option( 'contentking_client_token' );
 			$api->update_status( false, $token );
-
+			update_option( 'contentking_status_flag', '0' );
 		}
 
 

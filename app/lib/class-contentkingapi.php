@@ -45,7 +45,7 @@ class ContentkingAPI implements ContentkingAPIInterface {
 		if ( is_wp_error( $response ) ) :
 			return false;
 
-		elseif ( isset( $response['response']['code'] ) && 200 === intval( $response['response']['code'] ) ) :
+		elseif ( 200 === intval( $response['response']['code'] ) ) :
 			return true;
 		endif;
 
@@ -70,13 +70,11 @@ class ContentkingAPI implements ContentkingAPIInterface {
 		$response = wp_remote_post( $this->api_url . 'check_url', $data );
 
 		if ( ! is_wp_error( $response ) ) :
-			if ( isset( $response['response']['code'] ) ) :
-				if ( 200 === intval( $response['response']['code'] ) ) :
-					return true;
-				elseif ( 401 === intval( $response['response']['code'] ) ) :
-					if ( isset( $response['body']['code'] ) && 'auth_failed' === $response['body']['code'] ) :
-						return false;
-					endif;
+			if ( 200 === intval( $response['response']['code'] ) ) :
+				return true;
+			elseif ( 401 === intval( $response['response']['code'] ) ) :
+				if ( 'auth_failed' === $response['response']['message'] ) :
+					return false;
 				endif;
 			endif;
 

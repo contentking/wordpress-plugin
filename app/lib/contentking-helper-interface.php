@@ -9,19 +9,20 @@
 /**
  * Interface for class ContentkingHelper
  */
-interface ContentkingHelperInterface {
+interface ContentkingHelperInterface
+{
 
 	/**
 	 * Get all URLs on all different domains given WordPress instance.
 	 *
-	 * @return Array of URLs
+	 * @return array<string>
 	 */
 	public function get_websites();
 
 	/**
 	 * Get list of features.
 	 *
-	 * @return Array of objects
+	 * @return array<array{type: string, api_url: string}>
 	 */
 	public function get_features();
 

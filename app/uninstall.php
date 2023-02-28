@@ -7,9 +7,9 @@
  * @package contentking-plugin
  */
 
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+if (defined('WP_UNINSTALL_PLUGIN') === FALSE) {
 	die;
 }
 
-delete_option( 'contentking_client_token' );
-delete_option( 'contentking_status_flag' );
+delete_option('contentking_client_token');
+delete_option('contentking_status_flag');

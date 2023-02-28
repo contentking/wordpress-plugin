@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || die( 'This file should not be accessed directly!' );
 
-if ( ! current_user_can( 'manage_options' ) ) :
+if ( !current_user_can( 'manage_options' ) ) :
 	wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'contentking-plugin' ) );
 endif;
 
@@ -29,13 +29,13 @@ endif;
 				<?php
 
 				$flag = get_option( 'contentking_status_flag' );
-				if ( '1' === $flag ) :
+
+				if ( $flag === '1' ) :
 					?>
 
 					<i class = "icon-ok"> </i>
 
 				<?php else : ?>
-
 					<i class = "icon-cancel"> </i>
 
 				<?php endif; ?>
@@ -50,7 +50,8 @@ endif;
 </form>
 <br/>
 <?php
-if ( 5 < strlen( $contentking_client_token ) && '0' === $flag ) :
+
+if ( 5 < strlen( $contentking_client_token ) && $flag === '0' ) :
 	?>
 	<form method="post">
 		<?php wp_nonce_field( 'contentking_validate_token', 'ck_validate_token' ); ?>

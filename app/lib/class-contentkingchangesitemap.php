@@ -14,54 +14,51 @@
  * Extends WordPress Async Task.
  * @package contentking-plugin
  */
-class ContentkingChangeSitemap extends WP_Async_Task {
+class ContentkingChangeSitemap extends WP_Async_Task
+{
 
 	/**
-	 * Action to use to trigger this task
+	 * Action which will react if there are any changes with sitemap.
 	 *
 	 * @var string
 	 */
-	protected $action = 'contentking_updated_sitemap'; // Action, which will react, if there're any changes with sitemap.
+	protected $action = 'contentking_updated_sitemap';
+
 	/**
 	 * Priority to fire intermediate action.
 	 *
 	 * @var int
 	 */
-	protected $priority = 9999; // We need this to have pretty high to make sure all other actions are done.
+	protected $priority = 9999;
 
 	/**
 	 * Prepare POST data to send to session that processes the task
 	 *
-	 * @param array $data Params from hook.
-	 *
-	 * @return array|NULL
+	 * @param array<mixed> $data Params from hook.
+	 * @return array{wpseo_xml: array<string>}|NULL
 	 */
-	protected function prepare_data( $data ) {
+	protected function prepare_data($data)
+	{
+		if (class_exists('WPSEO_Sitemaps_Router') === FALSE) {
+			return NULL;
+		}
 
-		if ( class_exists( 'WPSEO_Sitemaps_Router' ) ) :
-
-			$url = WPSEO_Sitemaps_Router::get_base_url( 'sitemap_index.xml' );
-
-			return array(
-				'wpseo_xml' => array( $url ),
-			);
-
-		endif;
-
-		return null;
+		return [
+			'wpseo_xml' => [WPSEO_Sitemaps_Router::get_base_url('sitemap_index.xml')],
+		];
 	}
 
 	/**
 	 * Run the asynchronous task
-	 *
 	 * Calls all functions hooked to async hook
+	 *
+	 * @return void
 	 */
-	protected function run_action() {
-
-		if ( isset( $_POST['wpseo_xml'] ) ) : // phpcs:ignore WordPress.Security.NonceVerificationSniff. CSRF.
-			do_action( "wp_async_$this->action", $_POST['wpseo_xml'] ); // phpcs:ignore WordPress.Security.NonceVerificationSniff,WordPress.Security.ValidatedSanitizedInputSniff. CSRF ok, sanitization ok.
-		endif;
-
+	protected function run_action()
+	{
+		if (isset($_POST['wpseo_xml'])) {
+			do_action("wp_async_$this->action", $_POST['wpseo_xml']);
+		}
 	}
 
 }

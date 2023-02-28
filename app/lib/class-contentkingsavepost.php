@@ -10,71 +10,81 @@
  *
  * @package contentking-plugin
  */
-class ContentkingSavePost extends WP_Async_Task {
+class ContentkingSavePost extends WP_Async_Task
+{
 
 	/**
-	 * Action to use to trigger this task
+	 * Action triggered whenever a post (even custom) or page is created or updated, which could be from an import, post/page edit form, xmlrpc, or post by email.
 	 *
 	 * @var string
 	 */
-	protected $action = 'save_post'; // action triggered whenever a post (even custom) or page is created or updated, which could be from an import, post/page edit form, xmlrpc, or post by email.
+	protected $action = 'save_post';
 
 	/**
 	 * Priority to fire intermediate action.
 	 *
 	 * @var int
 	 */
-	protected $priority = 9999; // We need this to have pretty high to make sure all other actions are done.
+	protected $priority = 9999;
 
 	/**
 	 * Array of urls to be sent to API
 	 *
-	 * @var array
+	 * @var array<string>
 	 */
-	private $urls = array();
+	private $urls = [];
 
 	/**
 	 * Prepare POST data to send to session that processes the task
 	 *
-	 * @param array $data Params from hook.
-	 *
-	 * @return array|NULL
+	 * @param array<mixed> $data Params from hook.
+	 * @return array<mixed>|NULL
 	 */
-	protected function prepare_data( $data ) {
+	protected function prepare_data($data)
+	{
+		if ((defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)) {
+			return NULL;
+		}
 
-		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) :
-			return null;
-		endif;
+		if ($data[1]->post_status === 'publish') {
+			$post_type_data = get_post_type_object($data[1]->post_type);
 
-		if ( 'publish' === $data[1]->post_status ) : // Post is published.
+			if ($post_type_data === NULL) {
+				return NULL;
+			}
 
-			$post_type_data = get_post_type_object( $data[1]->post_type );
-			if ( intval( $post_type_data->public ) === 1 || intval( $post_type_data->publicly_queryable ) === 1 ) : // Post has public URL.
-				$url       = get_permalink( $data[0] );
-				$fixed_url = str_replace( '__trashed', '', $url ); // Fix url in case parent page was thrashed recently.
-				array_push( $this->urls, $fixed_url ); // Only data from last call will be used in async task.
+			if (
+				intval($post_type_data->public) === 1
+				|| intval($post_type_data->publicly_queryable) === 1
+			) {
+				$url = get_permalink($data[0]);
 
-				return array(
+				if ($url !== FALSE) {
+					$fixed_url = str_replace('__trashed', '', $url);
+					$this->urls[] = $fixed_url;
+				}
+
+				return [
 					'urls' => $this->urls,
-				);
+				];
+			}
+		}
 
-			endif;
-		endif;
-
-		return null;
+		return NULL;
 	}
 
 	/**
 	 * Run the asynchronous task
 	 *
 	 * Calls all functions hooked to async hook
+	 *
+	 * @return void
 	 */
-	protected function run_action() {
-
-		if ( isset( $_POST['urls'] ) ) : // phpcs:ignore WordPress.Security.NonceVerificationSniff. CSRF.
-			do_action( "wp_async_$this->action", $_POST['urls'] ); // phpcs:ignore WordPress.Security.NonceVerificationSniff,WordPress.Security.ValidatedSanitizedInputSniff. CSRF ok, sanitization ok.
-		endif;
-
+	protected function run_action()
+	{
+		if (isset($_POST['urls']) ) {
+			do_action("wp_async_$this->action", $_POST['urls']);
+		}
 	}
 
 }

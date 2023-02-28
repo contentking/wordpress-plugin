@@ -10,67 +10,85 @@
  *
  * @package contentking-plugin
  */
-class ContentkingTrashPost extends WP_Async_Task {
+class ContentkingTrashPost extends WP_Async_Task
+{
 
 	/**
-	 * Action to use to trigger this task
+	 * Action fires before a post is sent to the trash
 	 *
 	 * @var string
 	 */
-	protected $action = 'wp_trash_post'; // Fires before a post is sent to the trash.
+	protected $action = 'wp_trash_post';
 
 	/**
 	 * Priority to fire intermediate action.
 	 *
 	 * @var int
 	 */
-	protected $priority = 9999; // We need this to have pretty high to make sure all other actions are done.
+	protected $priority = 9999;
 
 	/**
 	 * Array of urls to be sent to API
 	 *
-	 * @var array
+	 * @var array<mixed>
 	 */
-	private $urls = array();
+	private $urls = [];
 
 	/**
 	 * Prepare POST data to send to session that processes the task
 	 *
-	 * @param array $data Params from hook.
-	 *
-	 * @return array|NULL
+	 * @param array<mixed> $data Params from hook.
+	 * @return array<mixed>|NULL
 	 */
-	protected function prepare_data( $data ) {
+	protected function prepare_data($data)
+	{
+		$wpPost = get_post($data[0]);
 
-			$post_obj = get_post( $data[0] );
-
-			$post_type_data = get_post_type_object( $post_obj->post_type );
-		if ( intval( $post_type_data->public ) === 1 || intval( $post_type_data->publicly_queryable ) === 1 ) : // Post has public URL.
-
-			$url       = get_permalink( $data[0] );
-			$fixed_url = str_replace( '__trashed', '', $url ); // Fix url in case parent page was thrashed recently.
-			array_push( $this->urls, $fixed_url ); // Only data from last call will be used in async task.
-
-			return array(
-				'urls' => $this->urls,
+		if ($wpPost === NULL) {
+			throw new LogicException(
+				sprintf(
+					'The variable has to be instance of %s',
+					WP_Post::class
+				)
 			);
+		}
 
-			endif;
+		$postTypeData = get_post_type_object($wpPost->post_type);
 
-		return null;
+		if (
+			$postTypeData !== NULL
+			&& (
+				intval($postTypeData->public) === 1
+				|| intval($postTypeData->publicly_queryable ) === 1
+			)
+		) {
+			$url = get_permalink($data[0]);
+
+			if ($url !== FALSE) {
+				$fixed_url = str_replace('__trashed', '', $url);
+				$this->urls[] = $fixed_url;
+			}
+
+			return [
+				'urls' => $this->urls,
+			];
+		}
+
+		return NULL;
 	}
 
 	/**
 	 * Run the asynchronous task
 	 *
 	 * Calls all functions hooked to async hook
+	 *
+	 * @return void
 	 */
-	protected function run_action() {
-
-		if ( isset( $_POST['urls'] ) ) : // phpcs:ignore WordPress.Security.NonceVerificationSniff. CSRF.
-			do_action( "wp_async_$this->action", $_POST['urls'] ); // phpcs:ignore WordPress.Security.NonceVerificationSniff,WordPress.Security.ValidatedSanitizedInputSniff. CSRF ok, sanitization ok.
-		endif;
-
+	protected function run_action()
+	{
+		if (isset($_POST['urls'])) {
+			do_action("wp_async_$this->action", $_POST['urls']);
+		}
 	}
 
 }

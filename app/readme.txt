@@ -1,8 +1,8 @@
 === ContentKing for Conductor ===
 Contributors: contentkingapp
 Tags: contentking, seo monitoring
-Requires at least: 3.3
-Tested up to: 5.9
+Requires at least: 5.3
+Tested up to: 6.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -27,9 +27,10 @@ You’ll have eyes on your site 24/7 and a user-friendly interface that gives yo
 See why brands like Netflix, H&M, Condé Nast and FedEx use ContentKing to win at SEO.
 
 == Requirements ==
-Plugin requires PHP version >= 5.5.
+Plugin requires PHP version >= 7.4.
 
 == Changelog ==
+= 1.5.15 = Update compatible WordPress versions
 = 1.5.14 = Update compatible WordPress versions
 = 1.5.13 = Changed the name and description of the plugin
 = 1.5.12 = Update compatible WordPress versions

@@ -1,10 +1,13 @@
 {
 	"config": {
 		"platform": {
-		  "php": "7.3.13"
+		  "php": "8.0.12"
 		},
 		"sort-packages": true,
-		"vendor-dir": "app/vendor"
+		"vendor-dir": "app/vendor",
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": false
+		}
 	},
 	"type": "project",
 	"require": {
@@ -13,14 +16,14 @@
 	"require-dev": {
 		"j13k/yaml-lint": "~1.1.0",
 		"phpstan/phpstan": "~1.6.0",
-		"squizlabs/php_codesniffer": "~3.6.0",
+	  	"slevomat/coding-standard": "~7.2.0",
+	  	"squizlabs/php_codesniffer": "~3.6.0",
 		"symfony/console": "~5.4.0",
-		"szepeviktor/phpstan-wordpress": "~1.1.0",
-		"wp-coding-standards/wpcs": "~2.3.0"
+		"szepeviktor/phpstan-wordpress": "~1.0.0"
 	},
 	"scripts": {
-		"phpcs": "app/vendor/bin/phpcs --config-set installed_paths ../../../../app/vendor/wp-coding-standards/wpcs && app/vendor/bin/phpcs --ignore=./app/vendor/* --extensions=php --standard=ruleset.xml ./app/",
-		"phpcbf": "app/vendor/bin/phpcbf --config-set installed_paths ../../../../app/vendor/wp-coding-standards/wpcs && app/vendor/bin/phpcbf --ignore=./app/vendor/* --standard=WordPress ./app/",
+		"phpcs": "app/vendor/bin/phpcs --parallel=50 --colors -p -s --ignore=./app/vendor/* --extensions=php --standard=ruleset.xml ./app/",
+		"phpcbf": "app/vendor/bin/phpcbf --parallel=50 --colors -p -s --ignore=./app/vendor/* --standard=ruleset.xml ./app/",
 		"phpstan": "app/vendor/bin/phpstan analyze --memory-limit 512M",
 		"phpstanBaseline": "app/vendor/bin/phpstan analyse --memory-limit 512M --generate-baseline",
 		"check": "composer phpstan && composer phpcs && composer yaml-lint",

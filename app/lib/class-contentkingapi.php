@@ -12,7 +12,8 @@
  *
  * @package contentking-plugin
  */
-class ContentkingAPI implements ContentkingAPIInterface {
+class ContentkingAPI implements ContentkingAPIInterface
+{
 
 	/**
 	 * API endpoint
@@ -24,116 +25,112 @@ class ContentkingAPI implements ContentkingAPIInterface {
 	/**
 	 * Prepare api call to update status.
 	 *
-	 * @param bool   $status plugin status (false - deactivated, true - activated).
-	 * @param string $token API secret token to be validated.
-	 * @return Bool
+	 * @param bool $is_plugin_active
+	 * @param string $client_token
+	 * @return bool
 	 */
-	public function update_status( $status, $token = '' ) {
+	public function update_status($is_plugin_active, $client_token = '')
+	{
+		if ($client_token === '') {
+			$client_token = get_option('contentking_client_token');
+		}
 
-		if ( '' === $token ) :
-			$token = get_option( 'contentking_client_token' );
-		endif;
-
-		$data     = $this->prepare_request_data(
+		$data = $this->prepare_request_data(
 			'update_status',
-			array(
-				'token'  => $token,
-				'status' => $status,
-			)
+			[
+				'token' => $client_token,
+				'status' => $is_plugin_active,
+			]
 		);
-		$response = wp_remote_post( $this->api_url . 'update_status', $data );
-		if ( is_wp_error( $response ) ) :
-			return false;
 
-		elseif ( 200 === intval( $response['response']['code'] ) ) :
-			return true;
-		endif;
+		if ($data === FALSE) {
+			return FALSE;
+		}
 
-		return false;
+		$response = wp_remote_post($this->api_url . 'update_status', $data);
+
+		if (is_wp_error($response)) {
+			return FALSE;
+		}
+
+		return intval($response['response']['code']) === 200;
 	}
-
 
 	/**
 	 * Performs api call to send URL to Contentking.
 	 *
-	 * @param string $url URL to be sent to Contentking.
-	 * @return Bool
+	 * @param string $url
+	 * @return bool
 	 */
-	public function check_url( $url = '' ) {
-
-		$data     = $this->prepare_request_data(
+	public function check_url($url)
+	{
+		$data = $this->prepare_request_data(
 			'check_url',
-			array(
+			[
 				'url' => $url,
-			)
+			]
 		);
-		$response = wp_remote_post( $this->api_url . 'check_url', $data );
 
-		if ( ! is_wp_error( $response ) ) :
-			if ( 200 === intval( $response['response']['code'] ) ) :
-				return true;
-			elseif ( 401 === intval( $response['response']['code'] ) ) :
-				if ( 'auth_failed' === $response['response']['message'] ) :
-					return false;
-				endif;
-			endif;
+		if ($data === FALSE) {
+			return FALSE;
+		}
 
-		endif;
+		$response = wp_remote_post($this->api_url . 'check_url', $data);
 
-		return true;
+		if (is_wp_error($response)) {
+			return FALSE;
+		}
 
+		return intval($response['response']['code']) === 200;
 	}
 
 	/**
 	 * Prepare HTTP request data for API call
 	 *
-	 * @param string $method name of request.
-	 * @param array  $data input data.
-	 * @return Array HTTP request data.
+	 * @param string $request_method
+	 * @param array<mixed> $input_data
+	 * @return array{
+	 *   headers: array{
+	 *     Content-Type: non-empty-string,
+	 *     Authorization: non-empty-string,
+	 *   },
+	 *   body: string,
+	 * }|FALSE
 	 */
-	public function prepare_request_data( $method, $data = array() ) {
+	public function prepare_request_data($request_method, $input_data)
+	{
+		if ($request_method === 'check_url' && isset($input_data['url'])) {
+			$body = [
+				'url' => $input_data['url'],
+			];
+		} elseif ($request_method === 'update_status') {
+			$helper = new ContentkingHelper();
 
-		if ( empty( $data ) ) {
-			return array();
+			$body = [
+				'features' => $helper->get_features(),
+				'status' => $input_data['status'],
+				'type' => 'wordpress',
+				'websites' => $helper->get_websites(),
+			];
+		} else {
+			throw new BadMethodCallException($request_method);
 		}
 
-		if ( isset( $data['token'] ) ) :
-			$token = $data['token'];
-		else :
-			$token = get_option( 'contentking_client_token' );
-		endif;
+		$bodyJson = wp_json_encode($body);
 
-		$prepared_data = array(
-			'headers' => array(
-				'Content-Type'  => 'application/json',
-				'Authorization' => 'token ' . $token,
-			),
-		);
+		if ($bodyJson === FALSE) {
+			return FALSE;
+		}
 
-		if ( 'check_url' === $method ) :
-
-			$prepared_data['body'] = wp_json_encode( array() );
-			if ( isset( $data['url'] ) ) :
-				$prepared_data['body'] = wp_json_encode(
-					array(
-						'url' => $data['url'],
-					)
-				);
-			endif;
-
-		elseif ( 'update_status' === $method ) :
-			$body_data             = array();
-			$body_data['status']   = $data['status'];
-			$body_data['type']     = 'wordpress'; // phpcs:ignore spelling ok.
-			$helper                = new ContentkingHelper();
-			$body_data['websites'] = $helper->get_websites();
-			$body_data['features'] = $helper->get_features();
-			$prepared_data['body'] = wp_json_encode( $body_data );
-		endif;
-
-		return $prepared_data;
+		return [
+			'body' => $bodyJson,
+			'headers' => [
+				'Content-Type' => 'application/json',
+				'Authorization' => 'token ' . (
+					isset($input_data['token']) ? $input_data['token'] : get_option('contentking_client_token')
+				),
+			],
+		];
 	}
-
-
 
 }

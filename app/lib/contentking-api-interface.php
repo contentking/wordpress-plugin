@@ -1,6 +1,6 @@
 <?php
 /**
- * Contentking API interface.
+ * ContentKing API interface.
  *
  * @package contentking-plugin
  */
@@ -21,9 +21,9 @@ interface ContentkingAPIInterface
 	public function update_status($status, $token);
 
 	/**
-	 * Performs api call to send URL to Contentking.
+	 * Performs api call to send URL to ContentKing.
 	 *
-	 * @param string $url URL to be sent to Contentking.
+	 * @param string $url URL to be sent to ContentKing.
 	 * @return bool
 	 */
 	public function check_url($url);

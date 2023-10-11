@@ -1,6 +1,6 @@
 <?php
 /**
- * Contentking Save Post event actions.
+ * ContentKing Save Post event actions.
  *
  * @package contentking-plugin
  */

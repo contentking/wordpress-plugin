@@ -1,6 +1,6 @@
 <?php
 /**
- * Contentking API.
+ * ContentKing API.
  *
  * @file
  * Handling API requests.
@@ -57,7 +57,7 @@ class ContentkingAPI implements ContentkingAPIInterface
 	}
 
 	/**
-	 * Performs api call to send URL to Contentking.
+	 * Performs api call to send URL to ContentKing.
 	 *
 	 * @param string $url
 	 * @return bool

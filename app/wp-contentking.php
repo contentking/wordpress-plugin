@@ -99,9 +99,9 @@ class WP_Contentking
 	}
 
 	/**
-	 * Performs api calls to send URL to Contentking.
+	 * Performs api calls to send URL to ContentKing.
 	 *
-	 * @param array<string> $urls array of URLs to be sent to Contentking.
+	 * @param array<string> $urls array of URLs to be sent to ContentKing.
 	 * @return void
 	 */
 	public function send_to_api($urls)

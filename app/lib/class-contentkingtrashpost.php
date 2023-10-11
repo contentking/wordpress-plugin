@@ -1,6 +1,6 @@
 <?php
 /**
- * Contentking Trash Post event actions.
+ * ContentKing Trash Post event actions.
  *
  * @package contentking-plugin
  */
